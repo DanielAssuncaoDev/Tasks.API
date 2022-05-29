@@ -12,7 +12,12 @@ namespace Tasks.API.Data
         public SqlServerContext(DbContextOptions<SqlServerContext> options)
                 : base(options) { }
 
-        public DbSet<Tb_usuario> Tb_usuario { get; set; }
 
+        #region Propriedades DbSets
+
+        public DbSet<Tb_usuario> Tb_usuario { get; set; }
+        public DbSet<Tb_workspace> Tb_workspace{ get; set; }
+
+        #endregion
     }
 }
