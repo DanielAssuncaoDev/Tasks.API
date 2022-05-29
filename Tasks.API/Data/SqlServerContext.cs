@@ -12,7 +12,6 @@ namespace Tasks.API.Data
         public SqlServerContext(DbContextOptions<SqlServerContext> options)
                 : base(options) { }
 
-
         #region Propriedades DbSets
 
         public DbSet<Tb_usuario> Tb_usuario { get; set; }
@@ -21,6 +20,7 @@ namespace Tasks.API.Data
         public DbSet<Tb_bucket> Tb_bucket{ get; set; }
         public DbSet<Tb_etiqueta> Tb_etiqueta{ get; set; }
         public DbSet<Tb_status> Tb_status{ get; set; }
+        public DbSet<Tb_task> Tb_task{ get; set; }
 
         #endregion
     }
