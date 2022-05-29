@@ -12,7 +12,7 @@ namespace Tasks.API.Data.Model
         /// <summary>
         /// Nome do Bucket
         /// </summary>
-        [Column("Varchar(100)")]
+        [Column(TypeName = "Varchar(100)")]
         public string Ds_bucket { get; set; }
         
         /// <summary>
@@ -23,6 +23,7 @@ namespace Tasks.API.Data.Model
         /// <summary>
         /// Objeto de relacionamento para o Workspace
         /// </summary>
+        [ForeignKey("Fk_workspace")]
         public virtual Tb_workspace Workspace { get; set; }
 
         /// <summary>

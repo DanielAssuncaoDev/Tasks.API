@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tasks.API.Data;
 
 namespace Tasks.API.Migrations
 {
     [DbContext(typeof(SqlServerContext))]
-    partial class SqlServerContextModelSnapshot : ModelSnapshot
+    [Migration("20220529183806_AddTb_Etiqueta")]
+    partial class AddTb_Etiqueta
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,7 +35,8 @@ namespace Tasks.API.Migrations
                         .HasColumnType("Datetime");
 
                     b.Property<string>("Ds_bucket")
-                        .HasColumnType("Varchar(100)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Varchar(100)");
 
                     b.Property<int>("Fk_workspace")
                         .HasColumnType("int");
@@ -65,10 +68,12 @@ namespace Tasks.API.Migrations
                         .HasColumnType("Datetime");
 
                     b.Property<string>("Ds_etiqueta")
-                        .HasColumnType("Varchar(50)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Varchar(50)");
 
                     b.Property<string>("Ds_hex")
-                        .HasColumnType("Char(6)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Char(6)");
 
                     b.Property<int?>("Fk_workspace")
                         .HasColumnType("int");

@@ -19,6 +19,7 @@ namespace Tasks.API.Data
         public DbSet<Tb_workspace> Tb_workspace{ get; set; }
         public DbSet<Tb_userworkspace> Tb_userworkspace{ get; set; }
         public DbSet<Tb_bucket> Tb_bucket{ get; set; }
+        public DbSet<Tb_etiqueta> Tb_etiqueta{ get; set; }
 
         #endregion
     }
