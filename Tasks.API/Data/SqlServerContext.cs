@@ -21,6 +21,7 @@ namespace Tasks.API.Data
         public DbSet<Tb_etiqueta> Tb_etiqueta{ get; set; }
         public DbSet<Tb_status> Tb_status{ get; set; }
         public DbSet<Tb_task> Tb_task{ get; set; }
+        public DbSet<Tb_etiquetatask> Tb_etiquetatask{ get; set; }
 
         #endregion
     }
