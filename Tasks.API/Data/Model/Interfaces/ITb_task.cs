@@ -11,7 +11,6 @@ namespace Tasks.API.Data.Model.Interfaces
         public string Ds_descricao { get; set; }
         public int Fk_bucket { get; set; }
         public int Fk_owner { get; set; }
-        public int? Fk_usuarioresponsavel { get; set; }
         public int? Fk_useralteradorstatus { get; set; }
         public int Fk_status { get; set; }
         public int Nr_posicao { get; set; }

@@ -42,17 +42,6 @@ namespace Tasks.API.Data
         /// </summary>
         [ForeignKey("Fk_owner")]
         public virtual Tb_usuario Owner { get; set; }
-        
-        /// <summary>
-        /// Usuário responsável pela Task
-        /// </summary>
-        public int? Fk_usuarioresponsavel { get; set; }
-
-        /// <summary>
-        /// Objeto de relacionamento com o responsável da Task
-        /// </summary>
-        [ForeignKey("Fk_usuarioresponsavel")]
-        public virtual Tb_usuario UserResponsavel { get; set; }
 
         /// <summary>
         /// Último usuário a alterar status da Task
