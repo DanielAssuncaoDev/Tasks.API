@@ -25,6 +25,7 @@ namespace Tasks.API.Data
         public DbSet<Tb_anexo> Tb_anexo{ get; set; }
         public DbSet<Tb_usertotask> Tb_usertotask{ get; set; }
         public DbSet<Tb_checklist> Tb_checklist { get; set; }
+        public DbSet<Tb_itemchecklist> Tb_itemchecklist { get; set; }
         
         #endregion
     }
