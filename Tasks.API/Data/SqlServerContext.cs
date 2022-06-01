@@ -12,7 +12,21 @@ namespace Tasks.API.Data
         public SqlServerContext(DbContextOptions<SqlServerContext> options)
                 : base(options) { }
 
-        public DbSet<Tb_usuario> Tb_usuario { get; set; }
+        #region Propriedades DbSets
 
+        public DbSet<Tb_usuario> Tb_usuario { get; set; }
+        public DbSet<Tb_workspace> Tb_workspace{ get; set; }
+        public DbSet<Tb_userworkspace> Tb_userworkspace{ get; set; }
+        public DbSet<Tb_bucket> Tb_bucket{ get; set; }
+        public DbSet<Tb_etiqueta> Tb_etiqueta{ get; set; }
+        public DbSet<Tb_status> Tb_status{ get; set; }
+        public DbSet<Tb_task> Tb_task{ get; set; }
+        public DbSet<Tb_etiquetatask> Tb_etiquetatask{ get; set; }
+        public DbSet<Tb_anexo> Tb_anexo{ get; set; }
+        public DbSet<Tb_usertotask> Tb_usertotask{ get; set; }
+        public DbSet<Tb_checklist> Tb_checklist { get; set; }
+        public DbSet<Tb_itemchecklist> Tb_itemchecklist { get; set; }
+        
+        #endregion
     }
 }

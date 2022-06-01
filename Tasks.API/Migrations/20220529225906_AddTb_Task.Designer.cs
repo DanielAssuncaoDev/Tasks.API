@@ -3,61 +3,23 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tasks.API.Data;
 
 namespace Tasks.API.Migrations
 {
     [DbContext(typeof(SqlServerContext))]
-    partial class SqlServerContextModelSnapshot : ModelSnapshot
+    [Migration("20220529225906_AddTb_Task")]
+    partial class AddTb_Task
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("Tasks.API.Data.Model.Tb_anexo", b =>
-                {
-                    b.Property<int>("Pk_id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime?>("Dh_alteracao")
-                        .HasColumnType("Datetime");
-
-                    b.Property<DateTime>("Dh_inclusao")
-                        .HasColumnType("Datetime");
-
-                    b.Property<string>("Ds_path")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Ds_type")
-                        .HasColumnType("Varchar(10)");
-
-                    b.Property<int>("Fk_owner")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Fk_task")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Qt_bytes")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Tg_inativo")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Pk_id");
-
-                    b.HasIndex("Fk_owner");
-
-                    b.HasIndex("Fk_task");
-
-                    b.ToTable("Tb_anexo");
-                });
 
             modelBuilder.Entity("Tasks.API.Data.Model.Tb_bucket", b =>
                 {
@@ -89,35 +51,6 @@ namespace Tasks.API.Migrations
                     b.HasIndex("Fk_workspace");
 
                     b.ToTable("Tb_bucket");
-                });
-
-            modelBuilder.Entity("Tasks.API.Data.Model.Tb_checklist", b =>
-                {
-                    b.Property<int>("Pk_id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime?>("Dh_alteracao")
-                        .HasColumnType("Datetime");
-
-                    b.Property<DateTime>("Dh_inclusao")
-                        .HasColumnType("Datetime");
-
-                    b.Property<string>("Ds_checklist")
-                        .HasColumnType("Varchar(100)");
-
-                    b.Property<int>("Fk_task")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Tg_inativo")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Pk_id");
-
-                    b.HasIndex("Fk_task");
-
-                    b.ToTable("Tb_checklist");
                 });
 
             modelBuilder.Entity("Tasks.API.Data.Model.Tb_etiqueta", b =>
@@ -152,69 +85,6 @@ namespace Tasks.API.Migrations
                     b.ToTable("Tb_etiqueta");
                 });
 
-            modelBuilder.Entity("Tasks.API.Data.Model.Tb_etiquetatask", b =>
-                {
-                    b.Property<int>("Pk_id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime?>("Dh_alteracao")
-                        .HasColumnType("Datetime");
-
-                    b.Property<DateTime>("Dh_inclusao")
-                        .HasColumnType("Datetime");
-
-                    b.Property<int>("Fk_etiqueta")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Fk_task")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Tg_inativo")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Pk_id");
-
-                    b.HasIndex("Fk_etiqueta");
-
-                    b.HasIndex("Fk_task");
-
-                    b.ToTable("Tb_etiquetatask");
-                });
-
-            modelBuilder.Entity("Tasks.API.Data.Model.Tb_itemchecklist", b =>
-                {
-                    b.Property<int>("Pk_id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime?>("Dh_alteracao")
-                        .HasColumnType("Datetime");
-
-                    b.Property<DateTime>("Dh_inclusao")
-                        .HasColumnType("Datetime");
-
-                    b.Property<string>("Ds_item")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Fk_checklist")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Tg_concluido")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Tg_inativo")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Pk_id");
-
-                    b.HasIndex("Fk_checklist");
-
-                    b.ToTable("Tb_itemchecklist");
-                });
-
             modelBuilder.Entity("Tasks.API.Data.Model.Tb_status", b =>
                 {
                     b.Property<int>("Pk_id")
@@ -245,37 +115,6 @@ namespace Tasks.API.Migrations
                     b.HasIndex("Fk_workspace");
 
                     b.ToTable("Tb_status");
-                });
-
-            modelBuilder.Entity("Tasks.API.Data.Model.Tb_usertotask", b =>
-                {
-                    b.Property<int>("Pk_id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime?>("Dh_alteracao")
-                        .HasColumnType("Datetime");
-
-                    b.Property<DateTime>("Dh_inclusao")
-                        .HasColumnType("Datetime");
-
-                    b.Property<int>("Fk_task")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Fk_user")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Tg_inativo")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Pk_id");
-
-                    b.HasIndex("Fk_task");
-
-                    b.HasIndex("Fk_user");
-
-                    b.ToTable("Tb_usertotask");
                 });
 
             modelBuilder.Entity("Tasks.API.Data.Model.Tb_userworkspace", b =>
@@ -408,6 +247,9 @@ namespace Tasks.API.Migrations
                     b.Property<int?>("Fk_useralteradorstatus")
                         .HasColumnType("int");
 
+                    b.Property<int?>("Fk_usuarioresponsavel")
+                        .HasColumnType("int");
+
                     b.Property<int>("Nr_posicao")
                         .HasColumnType("int");
 
@@ -427,26 +269,9 @@ namespace Tasks.API.Migrations
 
                     b.HasIndex("Fk_useralteradorstatus");
 
+                    b.HasIndex("Fk_usuarioresponsavel");
+
                     b.ToTable("Tb_task");
-                });
-
-            modelBuilder.Entity("Tasks.API.Data.Model.Tb_anexo", b =>
-                {
-                    b.HasOne("Tasks.API.Data.Model.Tb_usuario", "UsuarioCriador")
-                        .WithMany()
-                        .HasForeignKey("Fk_owner")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Tasks.API.Data.Tb_task", "Task")
-                        .WithMany()
-                        .HasForeignKey("Fk_task")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Task");
-
-                    b.Navigation("UsuarioCriador");
                 });
 
             modelBuilder.Entity("Tasks.API.Data.Model.Tb_bucket", b =>
@@ -460,17 +285,6 @@ namespace Tasks.API.Migrations
                     b.Navigation("Workspace");
                 });
 
-            modelBuilder.Entity("Tasks.API.Data.Model.Tb_checklist", b =>
-                {
-                    b.HasOne("Tasks.API.Data.Tb_task", "Task")
-                        .WithMany()
-                        .HasForeignKey("Fk_task")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Task");
-                });
-
             modelBuilder.Entity("Tasks.API.Data.Model.Tb_etiqueta", b =>
                 {
                     b.HasOne("Tasks.API.Data.Model.Tb_userworkspace", "Workspace")
@@ -480,36 +294,6 @@ namespace Tasks.API.Migrations
                     b.Navigation("Workspace");
                 });
 
-            modelBuilder.Entity("Tasks.API.Data.Model.Tb_etiquetatask", b =>
-                {
-                    b.HasOne("Tasks.API.Data.Model.Tb_etiqueta", "Etiqueta")
-                        .WithMany()
-                        .HasForeignKey("Fk_etiqueta")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Tasks.API.Data.Tb_task", "Task")
-                        .WithMany()
-                        .HasForeignKey("Fk_task")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Etiqueta");
-
-                    b.Navigation("Task");
-                });
-
-            modelBuilder.Entity("Tasks.API.Data.Model.Tb_itemchecklist", b =>
-                {
-                    b.HasOne("Tasks.API.Data.Model.Tb_checklist", "Checklist")
-                        .WithMany()
-                        .HasForeignKey("Fk_checklist")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Checklist");
-                });
-
             modelBuilder.Entity("Tasks.API.Data.Model.Tb_status", b =>
                 {
                     b.HasOne("Tasks.API.Data.Model.Tb_workspace", "Workspace")
@@ -517,25 +301,6 @@ namespace Tasks.API.Migrations
                         .HasForeignKey("Fk_workspace");
 
                     b.Navigation("Workspace");
-                });
-
-            modelBuilder.Entity("Tasks.API.Data.Model.Tb_usertotask", b =>
-                {
-                    b.HasOne("Tasks.API.Data.Tb_task", "Task")
-                        .WithMany()
-                        .HasForeignKey("Fk_task")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Tasks.API.Data.Model.Tb_usuario", "Usuario")
-                        .WithMany()
-                        .HasForeignKey("Fk_user")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Task");
-
-                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("Tasks.API.Data.Model.Tb_userworkspace", b =>
@@ -592,6 +357,10 @@ namespace Tasks.API.Migrations
                         .WithMany()
                         .HasForeignKey("Fk_useralteradorstatus");
 
+                    b.HasOne("Tasks.API.Data.Model.Tb_usuario", "UserResponsavel")
+                        .WithMany()
+                        .HasForeignKey("Fk_usuarioresponsavel");
+
                     b.Navigation("Bucket");
 
                     b.Navigation("Owner");
@@ -599,6 +368,8 @@ namespace Tasks.API.Migrations
                     b.Navigation("Status");
 
                     b.Navigation("UserAlteradorStatus");
+
+                    b.Navigation("UserResponsavel");
                 });
 #pragma warning restore 612, 618
         }
