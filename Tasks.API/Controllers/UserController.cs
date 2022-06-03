@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Tasks.API.Data;
 using Tasks.API.Data.Model;
+using Tasks.API.Data.Repository.Interfaces;
 
 namespace Tasks.API.Controllers
 {
@@ -12,17 +13,16 @@ namespace Tasks.API.Controllers
     [ApiController]
     public class UserController : Controller
     {
-        private SqlServerContext _context { get; set; }
+        private IUserRepository _userRepository { get; set; }
 
-        public UserController(SqlServerContext context)
+        public UserController(IUserRepository userRepository)
         {
-            _context = context;
+            _userRepository = userRepository;
         }
 
-
         [HttpGet]
-        public ActionResult<List<Tb_usuario>> ObterUsuarios() =>
-                Ok(_context.Tb_usuario.ToList());
+        public ActionResult<IEnumerable<Tb_usuario>> ObterUsuarios() =>
+                Ok(_userRepository.GetAll().ToList());
 
 
 

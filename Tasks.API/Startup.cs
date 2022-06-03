@@ -13,6 +13,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Tasks.API.Data;
+using Tasks.API.Data.Repository;
+using Tasks.API.Data.Repository.Interfaces;
 
 namespace Tasks.API
 {
@@ -39,6 +41,8 @@ namespace Tasks.API
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Tasks.API", Version = "v1" });
             });
 
+
+            services.AddScoped<IUserRepository, UserRepository>();
 
         }
 
