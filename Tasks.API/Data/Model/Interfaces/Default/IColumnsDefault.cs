@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Tasks.API.Data.Model.Interfaces
 {
-    interface IColumnsDefault
+    public interface IColumnsDefault
     { 
         public int Pk_id { get; set; }
         public DateTime Dh_inclusao { get; set; }
