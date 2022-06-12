@@ -15,6 +15,8 @@ using System.Threading.Tasks;
 using Tasks.API.Data;
 using Tasks.API.Data.Repository;
 using Tasks.API.Data.Repository.Interfaces;
+using Tasks.API.Domain.Service;
+using Tasks.API.JwtToken;
 
 namespace Tasks.API
 {
@@ -43,6 +45,10 @@ namespace Tasks.API
 
 
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<UserService>();
+            services.AddScoped<TokenService>();
+            services.AddScoped<LoginService>();
+
 
         }
 

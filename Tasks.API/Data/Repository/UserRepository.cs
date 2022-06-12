@@ -3,6 +3,8 @@ using System.Runtime.InteropServices;
 using Tasks.API.Data.Model;
 using Tasks.API.Data.Repository.Default;
 using Tasks.API.Data.Repository.Interfaces;
+using Tasks.API.Domain.Dto;
+using System.Linq;
 
 namespace Tasks.API.Data.Repository
 {
@@ -33,5 +35,16 @@ namespace Tasks.API.Data.Repository
             return entityResult;
         }
 
+        public Tb_usuario CredentialsValid(UserCredentials cred) =>
+            _dataset.FirstOrDefault(x => x.Ds_email == cred.Email && x.Hx_password == cred.Password);
+
+        public void RefreshUserToken(Tb_usuario user)
+        {
+            var userOldToken = GetById(user.Pk_id);
+            userOldToken.Hx_refreshtoken = user.Hx_refreshtoken;
+            userOldToken.Dh_expirationrefreshtoken = user.Dh_expirationrefreshtoken;
+
+            _context.SaveChanges();
+        }
     }
 }

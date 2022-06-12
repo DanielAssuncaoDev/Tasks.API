@@ -25,6 +25,5 @@ namespace Tasks.API.Controllers
                 Ok(_userRepository.GetAll().ToList());
 
 
-
     }
 }
