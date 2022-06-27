@@ -21,18 +21,20 @@ namespace Tasks.API.Data.Repository
         /// <returns>Entidade alterada</returns>
         public override Tb_usuario Update(Tb_usuario model, int id)
         {
-            var entityResult = GetById(id);
+            var user = GetById(id);
+            if (user is null)
+                throw new Exception("O usuário é inválido");
 
-            entityResult.Ds_usuario = model.Ds_usuario;
-            entityResult.Ds_email = model.Ds_email;
-            entityResult.Hx_password = model.Hx_password;
-            entityResult.Hx_refreshtoken = model.Hx_refreshtoken;
-            entityResult.Dh_expirationrefreshtoken = model.Dh_expirationrefreshtoken;
-            entityResult.Dh_inclusao = DateTime.Now;
-            entityResult.Tg_inativo = false;
+            user.Ds_usuario = model.Ds_usuario;
+            user.Ds_email = model.Ds_email;
+            user.Hx_password = model.Hx_password;
+            user.Hx_refreshtoken = model.Hx_refreshtoken;
+            user.Dh_expirationrefreshtoken = model.Dh_expirationrefreshtoken;
+            user.Dh_inclusao = DateTime.Now;
+            user.Tg_inativo = false;
 
             _context.SaveChanges();
-            return entityResult;
+            return user;
         }
 
         public Tb_usuario CredentialsValid(UserCredentials cred) =>
@@ -44,6 +46,17 @@ namespace Tasks.API.Data.Repository
             userOldToken.Hx_refreshtoken = user.Hx_refreshtoken;
             userOldToken.Dh_expirationrefreshtoken = user.Dh_expirationrefreshtoken;
 
+            _context.SaveChanges();
+        }
+
+        public void RevokeToken(int userId)
+        {
+            var user = GetById(userId);
+            if (user is null)
+                throw new Exception("O usuário é inválido");
+
+            user.Dh_expirationrefreshtoken  = null;
+            user.Hx_refreshtoken = null;
             _context.SaveChanges();
         }
     }

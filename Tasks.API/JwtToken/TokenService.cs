@@ -46,6 +46,10 @@ namespace Tasks.API.JwtToken
             return tokenHandler.WriteToken(token);
         }
 
+        /// <summary>
+        /// Gera um RefreshToken aleatório
+        /// </summary>
+        /// <returns>Um RefreshToken aleatório no formato string</returns>
         public string GenerateRefreshToken()
         {
             var randomNumber = new byte[32];
@@ -55,5 +59,39 @@ namespace Tasks.API.JwtToken
                 return Convert.ToBase64String(randomNumber);
             }
         }
+
+        /// <summary>
+        /// Recebe um AccessToken e retorna as claims do token.
+        /// </summary>
+        /// <param name="accessToken">Token de acesso (JWT)</param>
+        /// <returns>Claims do JWT</returns>
+        public ClaimsPrincipal GetPrncipalFromExpiredToken(string accessToken)
+        {
+            var tokenValidationParameters = new TokenValidationParameters()
+            {
+                ValidateAudience = false,
+                ValidateIssuer = false,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SecurityKey)),
+                ValidateLifetime = false
+            };
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            SecurityToken securityToken;
+
+            var principal = tokenHandler.ValidateToken(accessToken, tokenValidationParameters, out securityToken);
+            var jwtSecurityToken = securityToken as JwtSecurityToken;
+
+            if (jwtSecurityToken is null ||
+                !jwtSecurityToken.Header.Alg.Equals(
+                    SecurityAlgorithms.HmacSha256,
+                    StringComparison.InvariantCulture
+                )
+            )
+                throw new SecurityTokenException("Token inválido.");
+
+            return principal;
+        }
+
     }
 }

@@ -12,5 +12,6 @@ namespace Tasks.API.Data.Repository.Interfaces
     {
         Tb_usuario CredentialsValid(UserCredentials cred);
         void RefreshUserToken(Tb_usuario user);
+        void RevokeToken(int userId);
     }
 }

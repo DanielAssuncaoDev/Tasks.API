@@ -5,6 +5,6 @@ using System.Threading.Tasks;
 
 namespace Tasks.API.Domain.Dto.Token
 {
-    public class TokenResponse : Token
+    public class TokenRequest : Token
     { }
 }

@@ -44,10 +44,10 @@ namespace Tasks.API
             });
 
 
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<UserService>();
-            services.AddScoped<TokenService>();
             services.AddScoped<LoginService>();
+            services.AddScoped<UserService>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddTransient<TokenService>();
 
 
         }
