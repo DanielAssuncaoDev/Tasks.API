@@ -17,7 +17,7 @@ namespace Tasks.API.Migrations
                     Ds_email = table.Column<string>(type: "Varchar(200)", nullable: true),
                     Hx_password = table.Column<string>(type: "Varchar(100)", nullable: true),
                     Hx_refreshtoken = table.Column<string>(type: "Varchar(150)", nullable: true),
-                    Dh_expirationrefreshtoken = table.Column<DateTime>(type: "Datetime", nullable: false),
+                    Dh_expirationrefreshtoken = table.Column<DateTime>(type: "Datetime", nullable: true),
                     Dh_inclusao = table.Column<DateTime>(type: "Datetime", nullable: false),
                     Dh_alteracao = table.Column<DateTime>(type: "Datetime", nullable: true),
                     Tg_inativo = table.Column<bool>(type: "bit", nullable: false)
