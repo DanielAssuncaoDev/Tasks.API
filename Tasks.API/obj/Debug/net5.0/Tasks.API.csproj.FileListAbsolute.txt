@@ -22,7 +22,6 @@ C:\_UserDaniel\Projetos\_Tasks\API\Tasks\Tasks.API\bin\Debug\net5.0\Microsoft.Id
 C:\_UserDaniel\Projetos\_Tasks\API\Tasks\Tasks.API\bin\Debug\net5.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\_UserDaniel\Projetos\_Tasks\API\Tasks\Tasks.API\bin\Debug\net5.0\Microsoft.IdentityModel.Tokens.dll
 C:\_UserDaniel\Projetos\_Tasks\API\Tasks\Tasks.API\bin\Debug\net5.0\Microsoft.OpenApi.dll
-C:\_UserDaniel\Projetos\_Tasks\API\Tasks\Tasks.API\bin\Debug\net5.0\Newtonsoft.Json.dll
 C:\_UserDaniel\Projetos\_Tasks\API\Tasks\Tasks.API\bin\Debug\net5.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\_UserDaniel\Projetos\_Tasks\API\Tasks\Tasks.API\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\_UserDaniel\Projetos\_Tasks\API\Tasks\Tasks.API\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerUI.dll
@@ -59,3 +58,4 @@ C:\_UserDaniel\Projetos\_Tasks\API\Tasks\Tasks.API\obj\Debug\net5.0\Tasks.API.dl
 C:\_UserDaniel\Projetos\_Tasks\API\Tasks\Tasks.API\obj\Debug\net5.0\ref\Tasks.API.dll
 C:\_UserDaniel\Projetos\_Tasks\API\Tasks\Tasks.API\obj\Debug\net5.0\Tasks.API.pdb
 C:\_UserDaniel\Projetos\_Tasks\API\Tasks\Tasks.API\obj\Debug\net5.0\Tasks.API.genruntimeconfig.cache
+C:\_UserDaniel\Projetos\_Tasks\API\Tasks\Tasks.API\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
