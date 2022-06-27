@@ -27,6 +27,7 @@ namespace Tasks.API.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult<List<Tb_usuario>> ObterUsuarios() =>
             Ok(_userService.GetAll());
 
@@ -36,12 +37,12 @@ namespace Tasks.API.Controllers
             Ok(_loginService.GenerateToken(credentials));
 
         [Route("RefreshToken")]
-        [HttpPost]
+        [HttpPut]
         public ActionResult<TokenResponse> RefreshToken([FromBody] TokenRequest tokenRequest) =>
             Ok(_loginService.RefreshToken(tokenRequest));
 
         [Route("RevokeToken")]
-        [Authorize("Bearer")]
+        [Authorize]
         [HttpPut]
         public ActionResult RevokeToken()
         {

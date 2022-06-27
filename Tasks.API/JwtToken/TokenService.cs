@@ -18,7 +18,7 @@ namespace Tasks.API.JwtToken
         /// <summary>
         /// Chave para possibilitar a geração do Token
         /// </summary>
-        public  string SecurityKey { get; set; } = "Conde-Drakula@Tasks51282";
+        public static string SecurityKey { get; set; } = "Conde-Drakula@Tasks51282";
 
         /// <summary>
         /// Gera um token válido para o client poder ter acesso a outras rotas

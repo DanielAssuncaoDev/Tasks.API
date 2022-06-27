@@ -30,7 +30,9 @@ namespace Tasks.API.Domain.Service
         public List<Tb_usuario> GetAll() =>
             _userRepository.GetAll().ToList();
 
-        
+        public void RevokeToken(int userId) =>
+            _userRepository.RevokeToken(userId);
+
 
     }
 }

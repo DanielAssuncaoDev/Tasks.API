@@ -10,8 +10,6 @@ namespace Tasks.API.Domain.Service
     {
         public UserService _userService { get; set; }
         public TokenService _tokenService { get; set; }
-        private readonly IUserRepository _userRepository;
-
 
         public LoginService(UserService userService, TokenService tokenService)
         {
@@ -100,7 +98,7 @@ namespace Tasks.API.Domain.Service
             if (userId is null)
                 throw new Exception("Token inválido.");
 
-            _userRepository.RevokeToken(userId.Value);
+            _userService.RevokeToken(userId.Value);
         }
             
 

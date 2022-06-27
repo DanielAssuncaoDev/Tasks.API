@@ -37,9 +37,18 @@ namespace Tasks.API.Data.Repository
             return user;
         }
 
+        /// <summary>
+        /// Valida as informações as informações de um usuário
+        /// </summary>
+        /// <param name="cred">Credenciais do usuário</param>
+        /// <returns>Objeto do usuário</returns>
         public Tb_usuario CredentialsValid(UserCredentials cred) =>
             _dataset.FirstOrDefault(x => x.Ds_email == cred.Email && x.Hx_password == cred.Password);
 
+        /// <summary>
+        /// Atualiza o RefreshToken de um usuário
+        /// </summary>
+        /// <param name="user"></param>
         public void RefreshUserToken(Tb_usuario user)
         {
             var userOldToken = GetById(user.Pk_id);
@@ -49,6 +58,10 @@ namespace Tasks.API.Data.Repository
             _context.SaveChanges();
         }
 
+        /// <summary>
+        /// Retira o RefreshToken de um usuário
+        /// </summary>
+        /// <param name="userId">Id do usuário</param>
         public void RevokeToken(int userId)
         {
             var user = GetById(userId);
