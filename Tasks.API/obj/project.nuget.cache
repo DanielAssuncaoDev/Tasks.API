@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "5W0UzWIziq8Fy5vXCQ/lpY5DpZ2/7jIqaEX6fL+y93dWoeukArwCzTIO+ImyzymAgapCsEbisaCtCquaHtPBIA==",
+  "dgSpecHash": "ggaQ7iNS67vU6KIecyQSnfwlrYz/9Xi3i0Mlh5HSocMPXTaruJWpkluTtFensiiYZz1UyKZzV1CqINu30y4hpg==",
   "success": true,
   "projectFilePath": "C:\\_UserDaniel\\Projetos\\_Tasks\\API\\Tasks\\Tasks.API\\Tasks.API.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\daniel.aristoteles\\.nuget\\packages\\autofac\\6.4.0\\autofac.6.4.0.nupkg.sha512",
+    "C:\\Users\\daniel.aristoteles\\.nuget\\packages\\autofac.extensions.dependencyinjection\\8.0.0\\autofac.extensions.dependencyinjection.8.0.0.nupkg.sha512",
     "C:\\Users\\daniel.aristoteles\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\daniel.aristoteles\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\5.0.17\\microsoft.aspnetcore.authentication.jwtbearer.5.0.17.nupkg.sha512",
     "C:\\Users\\daniel.aristoteles\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
@@ -21,7 +23,7 @@
     "C:\\Users\\daniel.aristoteles\\.nuget\\packages\\microsoft.extensions.caching.memory\\5.0.0\\microsoft.extensions.caching.memory.5.0.0.nupkg.sha512",
     "C:\\Users\\daniel.aristoteles\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\5.0.0\\microsoft.extensions.configuration.abstractions.5.0.0.nupkg.sha512",
     "C:\\Users\\daniel.aristoteles\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\5.0.2\\microsoft.extensions.dependencyinjection.5.0.2.nupkg.sha512",
-    "C:\\Users\\daniel.aristoteles\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\5.0.0\\microsoft.extensions.dependencyinjection.abstractions.5.0.0.nupkg.sha512",
+    "C:\\Users\\daniel.aristoteles\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\6.0.0\\microsoft.extensions.dependencyinjection.abstractions.6.0.0.nupkg.sha512",
     "C:\\Users\\daniel.aristoteles\\.nuget\\packages\\microsoft.extensions.logging\\5.0.0\\microsoft.extensions.logging.5.0.0.nupkg.sha512",
     "C:\\Users\\daniel.aristoteles\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\5.0.0\\microsoft.extensions.logging.abstractions.5.0.0.nupkg.sha512",
     "C:\\Users\\daniel.aristoteles\\.nuget\\packages\\microsoft.extensions.options\\5.0.0\\microsoft.extensions.options.5.0.0.nupkg.sha512",
