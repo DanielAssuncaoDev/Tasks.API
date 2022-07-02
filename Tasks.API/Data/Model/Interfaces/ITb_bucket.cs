@@ -10,5 +10,6 @@ namespace Tasks.API.Data.Model.Interfaces
         public string Ds_bucket { get; set; }
         public int Fk_workspace { get; set; }
         public int Nr_position { get; set; }
+        public int? Fk_status { get; set; }
     }
 }

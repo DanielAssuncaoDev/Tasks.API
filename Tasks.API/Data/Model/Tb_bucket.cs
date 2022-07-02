@@ -30,5 +30,16 @@ namespace Tasks.API.Data.Model
         /// Posição em que reside o Bucket dentro do Workspace
         /// </summary>
         public int Nr_position { get; set; }
+
+        /// <summary>
+        /// Status referente ao Bucket
+        /// </summary>
+        public int? Fk_status { get; set; }
+
+        /// <summary>
+        /// Objeto de relacionamento com status
+        /// </summary>
+        [ForeignKey("Fk_status")]
+        public Tb_status? Status { get; set; }
     }
 }
