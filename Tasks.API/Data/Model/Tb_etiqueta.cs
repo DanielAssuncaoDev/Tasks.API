@@ -30,6 +30,6 @@ namespace Tasks.API.Data.Model
         /// Objeto de relacionamento com a etiqueta
         /// </summary>
         [ForeignKey("Fk_workspace")]
-        public virtual Tb_userworkspace Workspace { get; set; }
+        public virtual Tb_workspace Workspace { get; set; }
     }
 }
