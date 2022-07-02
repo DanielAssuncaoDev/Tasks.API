@@ -1,3 +1,4 @@
+using Autofac;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -18,6 +19,7 @@ using System.Threading.Tasks;
 using Tasks.API.Data;
 using Tasks.API.Data.Repository;
 using Tasks.API.Data.Repository.Interfaces;
+using Tasks.API.DependencyInjection;
 using Tasks.API.Domain.Service;
 using Tasks.API.JwtToken;
 
@@ -68,13 +70,11 @@ namespace Tasks.API
 
             #endregion
 
+        }
 
-            services.AddScoped<LoginService>();
-            services.AddScoped<UserService>();
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddTransient<TokenService>();
-
-
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            builder.RegisterModule(new ModuleIOC());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

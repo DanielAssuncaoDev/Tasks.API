@@ -59,3 +59,6 @@ C:\_UserDaniel\Projetos\_Tasks\API\Tasks\Tasks.API\obj\Debug\net5.0\ref\Tasks.AP
 C:\_UserDaniel\Projetos\_Tasks\API\Tasks\Tasks.API\obj\Debug\net5.0\Tasks.API.pdb
 C:\_UserDaniel\Projetos\_Tasks\API\Tasks\Tasks.API\obj\Debug\net5.0\Tasks.API.genruntimeconfig.cache
 C:\_UserDaniel\Projetos\_Tasks\API\Tasks\Tasks.API\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\_UserDaniel\Projetos\_Tasks\API\Tasks\Tasks.API\bin\Debug\net5.0\Autofac.dll
+C:\_UserDaniel\Projetos\_Tasks\API\Tasks\Tasks.API\bin\Debug\net5.0\Autofac.Extensions.DependencyInjection.dll
+C:\_UserDaniel\Projetos\_Tasks\API\Tasks\Tasks.API\bin\Debug\net5.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
