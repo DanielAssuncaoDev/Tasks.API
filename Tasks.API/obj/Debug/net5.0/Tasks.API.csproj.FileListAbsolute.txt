@@ -62,3 +62,8 @@ C:\_UserDaniel\Projetos\_Tasks\API\Tasks\Tasks.API\bin\Debug\net5.0\Microsoft.As
 C:\_UserDaniel\Projetos\_Tasks\API\Tasks\Tasks.API\bin\Debug\net5.0\Autofac.dll
 C:\_UserDaniel\Projetos\_Tasks\API\Tasks\Tasks.API\bin\Debug\net5.0\Autofac.Extensions.DependencyInjection.dll
 C:\_UserDaniel\Projetos\_Tasks\API\Tasks\Tasks.API\bin\Debug\net5.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\_UserDaniel\Projetos\_Tasks\API\Tasks\Tasks.API\bin\Debug\net5.0\AutoMapper.dll
+C:\_UserDaniel\Projetos\_Tasks\API\Tasks\Tasks.API\bin\Debug\net5.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\_UserDaniel\Projetos\_Tasks\API\Tasks\Tasks.API\bin\Debug\net5.0\Microsoft.Extensions.Options.dll
+C:\_UserDaniel\Projetos\_Tasks\API\Tasks\Tasks.API\bin\Debug\net5.0\Microsoft.Extensions.Primitives.dll
+C:\_UserDaniel\Projetos\_Tasks\API\Tasks\Tasks.API\bin\Debug\net5.0\System.Runtime.CompilerServices.Unsafe.dll

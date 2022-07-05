@@ -10,7 +10,7 @@ using Tasks.API.Data.Repository.Interfaces.Default;
 
 namespace Tasks.API.Data.Repository.Default
 {
-    public abstract class RepositoryDefault<TModel> : IRepositoryDefault<TModel>
+    public abstract class RepositoryDefault<TModel, TInterface> : IRepositoryDefault<TModel, TInterface>
         where TModel: ColumnsDefault 
     {
         /// <summary>
@@ -48,12 +48,17 @@ namespace Tasks.API.Data.Repository.Default
         /// </summary>
         /// <param name="model">Objeto a ser criado</param>
         /// <returns>Id do registro criado</returns>
-        public virtual int Create(TModel model)
+        public virtual int Create(TInterface model)
         {
-            _dataset.Add(model);
+            if (!(model is TModel))
+                throw new Exception("Interface incompatível com a entidade.");
+
+            TModel entity = model as TModel;
+
+            _dataset.Add(entity);
             _context.SaveChanges();
 
-            return model.Pk_id;
+            return entity.Pk_id;
         }
 
         /// <summary>
@@ -75,7 +80,7 @@ namespace Tasks.API.Data.Repository.Default
             return _dataset.FirstOrDefault(m => m.Pk_id == id);
         }
 
-        public virtual TModel Update(TModel model, int id)
+        public virtual TModel Update(TInterface model, int id)
         {
             throw new NotImplementedException();
         }

@@ -5,10 +5,11 @@ using Tasks.API.Data.Repository.Default;
 using Tasks.API.Data.Repository.Interfaces;
 using Tasks.API.Domain.Dto;
 using System.Linq;
+using Tasks.API.Data.Model.Interfaces;
 
 namespace Tasks.API.Data.Repository
 {
-    public class UserRepository : RepositoryDefault<Tb_usuario>, IUserRepository
+    public class UserRepository : RepositoryDefault<Tb_usuario, ITb_usuario>, IUserRepository
     {
         public UserRepository(SqlServerContext context) 
             : base(context) { }
@@ -19,7 +20,7 @@ namespace Tasks.API.Data.Repository
         /// <param name="model">Modelo da entidade a ser alterado</param>
         /// <param name="id">Id do registro a ser alterado</param>
         /// <returns>Entidade alterada</returns>
-        public override Tb_usuario Update(Tb_usuario model, int id)
+        public override Tb_usuario Update(ITb_usuario model, int id)
         {
             var user = GetById(id);
             if (user is null)
@@ -49,7 +50,7 @@ namespace Tasks.API.Data.Repository
         /// Atualiza o RefreshToken de um usuário
         /// </summary>
         /// <param name="user"></param>
-        public void RefreshUserToken(Tb_usuario user)
+        public void RefreshUserToken(ITb_usuario user)
         {
             var userOldToken = GetById(user.Pk_id);
             userOldToken.Hx_refreshtoken = user.Hx_refreshtoken;
@@ -68,7 +69,7 @@ namespace Tasks.API.Data.Repository
             if (user is null)
                 throw new Exception("O usuário é inválido");
 
-            user.Dh_expirationrefreshtoken  = null;
+            user.Dh_expirationrefreshtoken = null;
             user.Hx_refreshtoken = null;
             _context.SaveChanges();
         }

@@ -1,14 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Tasks.API.Data;
-using Tasks.API.Data.Model;
-using Tasks.API.Data.Repository.Interfaces;
 using Tasks.API.Domain.Dto;
 using Tasks.API.Domain.Dto.Token;
+using Tasks.API.Domain.Dto.Usuario;
 using Tasks.API.Domain.Service;
 
 namespace Tasks.API.Controllers
@@ -28,7 +23,7 @@ namespace Tasks.API.Controllers
 
         [HttpGet]
         [Authorize]
-        public ActionResult<List<Tb_usuario>> ObterUsuarios() =>
+        public ActionResult<List<UserConsult>> ObterUsuarios() =>
             Ok(_userService.GetAll());
 
         [Route("Login")]
