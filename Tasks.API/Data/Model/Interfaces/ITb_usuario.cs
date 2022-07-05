@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Tasks.API.Data.Model.Interfaces
 {
-    interface ITb_usuario : IColumnsDefault
+    public interface ITb_usuario : IColumnsDefault
     {
         public string Ds_usuario { get; set; }
         public string Ds_email { get; set; }
