@@ -38,5 +38,16 @@ namespace Tasks.API.Data.Model
         /// </summary>
         [Column(TypeName = "Datetime")]
         public DateTime? Dh_expirationrefreshtoken { get; set; }
+
+        /// <summary>
+        /// Flag para controlar se o e-mail do usuário já foi ativado
+        /// </summary>
+        public bool Tg_emailAtivo { get; set; }
+
+        /// <summary>
+        /// Código para a ativação do e-mail do usuário
+        /// </summary>
+        [Column(TypeName = "Numeric(6,0)")]
+        public int? Cd_ativacaoEmail { get; set; }
     }
 }
