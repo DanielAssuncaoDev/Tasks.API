@@ -1,8 +1,6 @@
-# TasksAPI
+# TasksAPI - V1
 
 ### O intúito do projeto é facilitar a organização do usuário de uma maneira dinâmica e fácil de ser utilizada
-
-## Rotas - V1
 <br>
 
 ## Rotas de Usuário
