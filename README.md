@@ -2,8 +2,6 @@
 
 ### O intúito do projeto é facilitar a organização do usuário de uma maneira dinâmica e fácil de ser utilizada
 
-# Projeto Tasks
-
 ## Rotas - V1
 <br>
 
