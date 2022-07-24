@@ -44,7 +44,7 @@ namespace Tasks.API.Data.Repository
         /// <param name="cred">Credenciais do usuário</param>
         /// <returns>Objeto do usuário</returns>
         public Tb_usuario CredentialsValid(UserCredentials cred) =>
-            _dataset.FirstOrDefault(x => x.Ds_email == cred.Email && x.Hx_password == cred.Password);
+            _dataset.FirstOrDefault(x => x.Ds_email.Equals(cred.Email) && x.Hx_password.Equals(cred.Password));
 
         /// <summary>
         /// Atualiza o RefreshToken de um usuário
@@ -73,5 +73,13 @@ namespace Tasks.API.Data.Repository
             user.Hx_refreshtoken = null;
             _context.SaveChanges();
         }
+
+        /// <summary>
+        /// Retorna o usuário com o e-mail passado por parâmetro
+        /// </summary>
+        /// <param name="email">E-mail do usuário desejado</param>
+        /// <returns>Usuário que contenha esse e-mail cadastrado</returns>
+        public Tb_usuario GetByEmail(string email) =>
+            _dataset.FirstOrDefault(x => x.Ds_email.Equals(email));
     }
 }

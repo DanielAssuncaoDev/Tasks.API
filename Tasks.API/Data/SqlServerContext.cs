@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Tasks.API.Data.Model;
+using System.Linq;
+using Tasks.API.Data.Model.Interfaces;
+using System;
 
 namespace Tasks.API.Data
 {
@@ -26,7 +25,60 @@ namespace Tasks.API.Data
         public DbSet<Tb_usertotask> Tb_usertotask{ get; set; }
         public DbSet<Tb_checklist> Tb_checklist { get; set; }
         public DbSet<Tb_itemchecklist> Tb_itemchecklist { get; set; }
-        
+
         #endregion
+
+        #region Métodos sobrepostos
+
+        public override int SaveChanges()
+        {
+            FillStandardFields(EntityState.Added);
+            FillStandardFields(EntityState.Modified);
+
+            return base.SaveChanges();
+        }
+
+        #endregion
+
+        #region Métodos privados
+
+        /// <summary>
+        /// Método para preencher os campos padrão das tabelas (Dh_alteracao, Dh_inclusao)
+        /// </summary>
+        /// <param name="entityState">Tipo de ação que será executada na entidade</param>
+        private void FillStandardFields(EntityState entityState)
+        {
+            // Detectando as mudanças realizadas nesse contexto.
+            ChangeTracker.DetectChanges();
+
+            // Recupera todas as entidades do contexto que estejam no mesmo estado passado por parâmetro
+            var entries = ChangeTracker.Entries()
+                        .Where(t => t.State == entityState)
+                        .Select(t => t.Entity)
+                        .ToArray();
+
+            // Percorre cada entidade adicionando os valores padrão para cada operação
+            foreach (var entity in entries)
+            {
+                if (!(entity is IColumnsDefault))
+                    continue;
+
+                var entityTable = entity as IColumnsDefault;
+                if (entityState == EntityState.Added)
+                {
+                    entityTable.Dh_inclusao = DateTime.Now;
+                    entityTable.Tg_inativo = false; 
+                }
+
+                if (entityState == EntityState.Modified)
+                {
+                    entityTable.Dh_alteracao = DateTime.Now;
+                }
+            }
+        }
+
+        #endregion
+
+
     }
 }

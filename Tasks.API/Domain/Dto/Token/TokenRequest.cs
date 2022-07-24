@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
+using Tasks.API.JwtToken;
 
 namespace Tasks.API.Domain.Dto.Token
 {
-    public class TokenRequest : Token
-    { }
+    public class TokenRequest
+    {
+        public string RefreshToken { get; set; }
+        public virtual string AccessToken { get; set; }
+
+    }
 }

@@ -21,7 +21,6 @@ namespace Tasks.API
             host.Run();
         }
 
-
         public static void CreateDbIfNotExists(IHost host)
         {
             using (var scope = host.Services.CreateScope())
@@ -40,7 +39,6 @@ namespace Tasks.API
                 }
             }
         }
-
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)

@@ -5,6 +5,7 @@ using Tasks.API.Domain.Dto;
 using Tasks.API.Domain.Dto.Token;
 using Tasks.API.Domain.Dto.Usuario;
 using Tasks.API.Domain.Service;
+using Tasks.API.JwtToken;
 
 namespace Tasks.API.Controllers
 {
@@ -14,40 +15,55 @@ namespace Tasks.API.Controllers
     {
         private UserService _userService { get; set; }
         private LoginService _loginService { get; set; }
+        private TokenApplicationInfo _tokenInfo { get; set; }
 
-        public UserController(UserService userService, LoginService loginService)
+
+        public UserController(UserService userService, LoginService loginService, TokenRequestContext tokenContext)
         {
             _userService = userService;
             _loginService = loginService;
+            _tokenInfo = tokenContext.TokenApplicationInfo;
         }
 
-        [HttpGet]
-        [Authorize]
-        public ActionResult<List<UserConsult>> ObterUsuarios() =>
-            Ok(_userService.GetAll());
+        #region Cadastrar-se
+
+        [Route("Cadastrar")]
+        [HttpPost]
+        public ActionResult<UserResponseId> CreateUser([FromBody] UserDto user) =>
+            Ok(_userService.CreateUser(user));
+
+        #endregion
+
+        #region Login
 
         [Route("Login")]
         [HttpPost]
         public ActionResult<TokenResponse> Login([FromBody] UserCredentials credentials) =>
             Ok(_loginService.GenerateToken(credentials));
 
+        #endregion
+
+        #region Refresh Token
+
         [Route("RefreshToken")]
         [HttpPut]
         public ActionResult<TokenResponse> RefreshToken([FromBody] TokenRequest tokenRequest) =>
             Ok(_loginService.RefreshToken(tokenRequest));
+            
+        #endregion
+
+        #region Revoke Token
 
         [Route("RevokeToken")]
         [Authorize]
         [HttpPut]
         public ActionResult RevokeToken()
         {
-            int? userId = int.Parse(User.FindFirst("IdUser").Value);
-            _loginService.RevokeToken(userId);
-
+            _loginService.RevokeToken(_tokenInfo.IdUser);
             return NoContent();
         }
-            
 
+        #endregion
 
     }
 }

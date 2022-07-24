@@ -42,7 +42,7 @@ namespace Tasks.API.Data.Model
         /// <summary>
         /// Flag para controlar se o e-mail do usuário já foi ativado
         /// </summary>
-        public bool Tg_emailAtivo { get; set; }
+        public bool Tg_emailAtivo { get; set; } = false;
 
         /// <summary>
         /// Código para a ativação do e-mail do usuário
