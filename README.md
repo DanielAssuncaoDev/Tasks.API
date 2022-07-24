@@ -46,7 +46,7 @@ Enviar E-mail de ativação
         "email": "string",
     },
     "responseJSON": {},
-    "statusCodeSuccess": "202 (No Content)",
+    "statusCodeSuccess": "204 (No Content)",
     "statusCodeError": "400 (Bad Request)"
 }
 ```
@@ -67,7 +67,7 @@ Validar e-mail
         "key": 0
     },
     "responseJSON": {},
-    "statusCodeSuccess": "202 (No Content)",
+    "statusCodeSuccess": "204 (No Content)",
     "statusCodeError": "404 (Bad Request)"
 }
 ```
