@@ -65,5 +65,14 @@ namespace Tasks.API.Controllers
 
         #endregion
 
+
+        [Route("EnviarEmailAtivacao")]
+        [HttpPut]
+        public ActionResult SendEmail([FromBody] UserEmail userEmail)
+        {
+            _userService.SendActivationKey(userEmail);
+            return NoContent();
+        }
+
     }
 }

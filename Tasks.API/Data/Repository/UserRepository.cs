@@ -81,5 +81,21 @@ namespace Tasks.API.Data.Repository
         /// <returns>Usuário que contenha esse e-mail cadastrado</returns>
         public Tb_usuario GetByEmail(string email) =>
             _dataset.FirstOrDefault(x => x.Ds_email.Equals(email));
+
+        /// <summary>
+        /// Grava a chave de ativação do usuário
+        /// </summary>
+        /// <param name="key">Chave de ativação</param>
+        /// <param name="email">E-mail do usuário em que sera gravada a chave de ativação</param>
+        public void SetActivationKey(int key, string email)
+        {
+            var user = GetByEmail(email);
+            if (user is null)
+                throw new Exception("Não foi encontrado nenhum usuário com o e-mail enviado");
+
+            user.Cd_ativacaoEmail = key;
+            _context.SaveChanges();
+        }
+
     }
 }

@@ -18,13 +18,14 @@ namespace Tasks.API.Domain.Service
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
 
-        #region Serviços do usuário
-
         public UserService(IUserRepository userRepository, IMapper mapper)
         {
             _userRepository = userRepository;
             _mapper = mapper;
         }
+
+
+        #region Serviços do usuário
 
         public Tb_usuario CredentialsValid(UserCredentials credentials)
         {
@@ -61,6 +62,16 @@ namespace Tasks.API.Domain.Service
 
         public Tb_usuario GetByEmail(string email) =>
             _userRepository.GetByEmail(email);
+
+        public void SendActivationKey(UserEmail userEmail)
+        {
+            var random = new Random();
+            int keyActivation = random.Next(100000, 999999);
+            _userRepository.SetActivationKey(keyActivation, userEmail.Email);
+
+            var emailService = new EmailService(userEmail.Email, keyActivation.ToString());
+            emailService.SendEmail();
+        }
 
         #endregion
 
