@@ -1,5 +1,4 @@
 ﻿using System;
-using Tasks.API.Data.Repository.Interfaces;
 using Tasks.API.Domain.Dto;
 using Tasks.API.Domain.Dto.Token;
 using Tasks.API.JwtToken;
@@ -27,6 +26,8 @@ namespace Tasks.API.Domain.Service
             var user = _userService.CredentialsValid(credentials);
             if (user is null)
                 throw new Exception("Credenciais inválidas.");
+            if (!user.Tg_emailAtivo)
+                throw new Exception("Conta não está ativada, ative sua conta para fazer o login.");
 
             var accessToken = _tokenService.GenerateAccessToken(
                     new TokenConfiguration()
@@ -54,14 +55,10 @@ namespace Tasks.API.Domain.Service
         /// <returns>Um novo AccessToken para o usuário</returns>
         public TokenResponse RefreshToken(TokenRequest token)
         {
-            var accessToken = token.AccessToken;
             var refreshToken = token.RefreshToken;
-
-            var principal = _tokenService.GetPrncipalFromExpiredToken(accessToken);
-            var idUser = principal.FindFirst("IdUser")?.Value;
+            var tokenInfo = _tokenService.GetClaimsFromExpiredToken(token.AccessToken);        
             
-            
-            var user = _userService.GetById(int.Parse(idUser));
+            var user = _userService.GetById(tokenInfo.IdUser);
             if (user is null)
                 return null;
 
@@ -70,7 +67,7 @@ namespace Tasks.API.Domain.Service
             if (user.Dh_expirationrefreshtoken < DateTime.Now)
                 throw new Exception("RefreshToken inspirado, logue-se novamente.");
             
-            accessToken = _tokenService.GenerateAccessToken(
+            var accessToken = _tokenService.GenerateAccessToken(
                 new TokenConfiguration()
                 {
                     TokenApplicationInfo = new TokenApplicationInfo() { IdUser = user.Pk_id }

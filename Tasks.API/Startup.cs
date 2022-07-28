@@ -2,6 +2,7 @@ using Autofac;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -47,8 +48,8 @@ namespace Tasks.API
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(x =>
                 {
-                    //x.RequireHttpsMetadata = false;
-                    //x.SaveToken = true;
+                    x.RequireHttpsMetadata = false;
+                    x.SaveToken = true;
                     x.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateAudience = false,
@@ -60,6 +61,8 @@ namespace Tasks.API
 
             #endregion
 
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<TokenRequestContext>();
         }
 
         public void ConfigureContainer(ContainerBuilder builder)

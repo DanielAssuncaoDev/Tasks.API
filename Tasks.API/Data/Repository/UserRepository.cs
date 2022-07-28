@@ -44,7 +44,7 @@ namespace Tasks.API.Data.Repository
         /// <param name="cred">Credenciais do usuário</param>
         /// <returns>Objeto do usuário</returns>
         public Tb_usuario CredentialsValid(UserCredentials cred) =>
-            _dataset.FirstOrDefault(x => x.Ds_email == cred.Email && x.Hx_password == cred.Password);
+            _dataset.FirstOrDefault(x => x.Ds_email.Equals(cred.Email) && x.Hx_password.Equals(cred.Password));
 
         /// <summary>
         /// Atualiza o RefreshToken de um usuário
@@ -73,5 +73,52 @@ namespace Tasks.API.Data.Repository
             user.Hx_refreshtoken = null;
             _context.SaveChanges();
         }
+
+        /// <summary>
+        /// Retorna o usuário com o e-mail passado por parâmetro
+        /// </summary>
+        /// <param name="email">E-mail do usuário desejado</param>
+        /// <returns>Usuário que contenha esse e-mail cadastrado</returns>
+        public Tb_usuario GetByEmail(string email)
+        {
+            var user = _dataset.FirstOrDefault(x => x.Ds_email.Equals(email));
+            if (user is null)
+                throw new Exception($"Não foi encontrado nenhum usuário com o e-mail {email}");
+
+            return user;
+        }
+            
+
+        /// <summary>
+        /// Grava a chave de ativação do usuário
+        /// </summary>
+        /// <param name="key">Chave de ativação</param>
+        /// <param name="email">E-mail do usuário em que sera gravada a chave de ativação</param>
+        public void SetActivationKey(int key, string email)
+        {
+            var user = GetByEmail(email);
+            if (user.Tg_emailAtivo)
+                throw new Exception("Sua conta ja está ativa.");
+
+            user.Cd_ativacaoEmail = key;
+            _context.SaveChanges();
+        }
+
+        /// <summary>
+        /// Ativa a conta do usuário com o Id passado por parâmetro
+        /// </summary>
+        /// <param name="idUser">Id do usuário a ser ativado</param>
+        public void ActivateAccount(int idUser)
+        {
+            var user = GetById(idUser);
+            if (user is null)
+                throw new Exception("Usuário não encontrado.");
+
+            user.Tg_emailAtivo = true;
+            user.Cd_ativacaoEmail = null;
+
+            _context.SaveChanges();
+        }
+
     }
 }

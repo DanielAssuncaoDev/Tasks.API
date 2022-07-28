@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Tasks.API.Data.Model.Interfaces
 {
@@ -13,6 +9,8 @@ namespace Tasks.API.Data.Model.Interfaces
         public string Hx_password { get; set; }
         public string Hx_refreshtoken { get; set; }
         public DateTime? Dh_expirationrefreshtoken { get; set; }
+        public bool Tg_emailAtivo { get; set; }
+        public int? Cd_ativacaoEmail { get; set; }
 
     }
 }
