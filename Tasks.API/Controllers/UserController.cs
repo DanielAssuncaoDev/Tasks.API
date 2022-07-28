@@ -65,6 +65,7 @@ namespace Tasks.API.Controllers
 
         #endregion
 
+        #region Enviar E-mail de ativação
 
         [Route("EnviarEmailAtivacao")]
         [HttpPut]
@@ -73,6 +74,20 @@ namespace Tasks.API.Controllers
             _userService.SendActivationKey(userEmail);
             return NoContent();
         }
+
+        #endregion
+
+        #region Ativar Conta
+
+        [Route("AtivarConta")]
+        [HttpPut]
+        public ActionResult ActivateAccount([FromBody] UserActivateAccount userActivateAccount)
+        {
+            _userService.ActivateAccount(userActivateAccount);
+            return NoContent();
+        }
+
+        #endregion
 
     }
 }

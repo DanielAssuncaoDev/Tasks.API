@@ -73,6 +73,15 @@ namespace Tasks.API.Domain.Service
             emailService.SendEmail();
         }
 
+        public void ActivateAccount(UserActivateAccount userActivateAccount)
+        {
+            var user = GetByEmail(userActivateAccount.Email);
+            if (user.Cd_ativacaoEmail != userActivateAccount.Key)
+                throw new Exception("Código de ativação inválido.");
+
+            _userRepository.ActivateAccount(user.Pk_id);
+        }
+
         #endregion
 
         #region Métodos privados

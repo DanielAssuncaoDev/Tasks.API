@@ -26,6 +26,8 @@ namespace Tasks.API.Domain.Service
             var user = _userService.CredentialsValid(credentials);
             if (user is null)
                 throw new Exception("Credenciais inválidas.");
+            if (!user.Tg_emailAtivo)
+                throw new Exception("Conta não está ativada, ative sua conta para fazer o login.");
 
             var accessToken = _tokenService.GenerateAccessToken(
                     new TokenConfiguration()
