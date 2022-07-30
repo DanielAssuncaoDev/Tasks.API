@@ -1,7 +1,4 @@
-﻿using System.Text.Json.Serialization;
-using Tasks.API.JwtToken;
-
-namespace Tasks.API.Domain.Dto.Token
+﻿namespace Tasks.API.Domain.Dto.Token
 {
     public class TokenRequest
     {

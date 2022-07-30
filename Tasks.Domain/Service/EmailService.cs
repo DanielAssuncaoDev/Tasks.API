@@ -22,7 +22,6 @@ namespace Tasks.API.Domain.Service
             EmailContent = emailContent;
         }
 
-
         public void SendEmail()
         {
             MailMessage mail = new MailMessage();

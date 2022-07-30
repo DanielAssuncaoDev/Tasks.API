@@ -1,9 +1,10 @@
 ﻿using System;
 using Tasks.API.Domain.Dto;
 using Tasks.API.Domain.Dto.Token;
+using Tasks.API.Domain.Service;
 using Tasks.API.JwtToken;
 
-namespace Tasks.API.Domain.Service
+namespace Tasks.API.JwtToken
 {
     public class LoginService
     {
