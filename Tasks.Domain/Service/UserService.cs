@@ -24,13 +24,13 @@ namespace Tasks.API.Domain.Service
             _mapper = mapper;
         }
 
-
         #region Serviços do usuário
 
         public Tb_usuario CredentialsValid(UserCredentials credentials)
         {
             credentials.Password = EncryptPassword(credentials.Password);
-            return _userRepository.CredentialsValid(credentials);
+            var userCredentials = _mapper.Map<Tb_usuario>(credentials);
+            return _userRepository.CredentialsValid(userCredentials);
         }            
 
         public void RefreshUserToken(Tb_usuario user) =>
@@ -76,6 +76,9 @@ namespace Tasks.API.Domain.Service
         public void ActivateAccount(UserActivateAccount userActivateAccount)
         {
             var user = GetByEmail(userActivateAccount.Email);
+            if (user is null)
+                throw new Exception($"Não foi encontrado nenhum usuário com o e-mail {userActivateAccount.Email}");
+
             if (user.Cd_ativacaoEmail != userActivateAccount.Key)
                 throw new Exception("Código de ativação inválido.");
 

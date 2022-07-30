@@ -61,6 +61,8 @@ namespace Tasks.API
 
             #endregion
 
+            services.AddScoped<LoginService>();
+            services.AddScoped<TokenService>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<TokenRequestContext>();
         }

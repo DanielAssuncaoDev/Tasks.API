@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using Tasks.API.Data.Model;
 using Tasks.API.Data.Repository.Default;
 using Tasks.API.Data.Repository.Interfaces;
-using Tasks.API.Domain.Dto;
 using System.Linq;
 using Tasks.API.Data.Model.Interfaces;
 
@@ -43,8 +41,8 @@ namespace Tasks.API.Data.Repository
         /// </summary>
         /// <param name="cred">Credenciais do usuário</param>
         /// <returns>Objeto do usuário</returns>
-        public Tb_usuario CredentialsValid(UserCredentials cred) =>
-            _dataset.FirstOrDefault(x => x.Ds_email.Equals(cred.Email) && x.Hx_password.Equals(cred.Password));
+        public Tb_usuario CredentialsValid(ITb_usuario cred) =>
+            _dataset.FirstOrDefault(x => x.Ds_email.Equals(cred.Ds_email) && x.Hx_password.Equals(cred.Hx_password));
 
         /// <summary>
         /// Atualiza o RefreshToken de um usuário
@@ -79,15 +77,9 @@ namespace Tasks.API.Data.Repository
         /// </summary>
         /// <param name="email">E-mail do usuário desejado</param>
         /// <returns>Usuário que contenha esse e-mail cadastrado</returns>
-        public Tb_usuario GetByEmail(string email)
-        {
-            var user = _dataset.FirstOrDefault(x => x.Ds_email.Equals(email));
-            if (user is null)
-                throw new Exception($"Não foi encontrado nenhum usuário com o e-mail {email}");
-
-            return user;
-        }
-            
+        public Tb_usuario GetByEmail(string email) =>
+            _dataset.FirstOrDefault(x => x.Ds_email.Equals(email));
+                        
 
         /// <summary>
         /// Grava a chave de ativação do usuário
@@ -97,6 +89,8 @@ namespace Tasks.API.Data.Repository
         public void SetActivationKey(int key, string email)
         {
             var user = GetByEmail(email);
+            if (user is null)
+                throw new Exception($"Não foi encontrado nenhum usuário com o e-mail {email}.");
             if (user.Tg_emailAtivo)
                 throw new Exception("Sua conta ja está ativa.");
 

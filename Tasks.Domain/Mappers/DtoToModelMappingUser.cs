@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Tasks.API.Data.Model;
 using Tasks.API.Data.Model.Interfaces;
+using Tasks.API.Domain.Dto;
 using Tasks.API.Domain.Dto.Usuario;
 
 namespace Tasks.API.Domain.Mappers
@@ -23,6 +24,11 @@ namespace Tasks.API.Domain.Mappers
             CreateMap<Tb_usuario, UserConsult>()
                 .ForMember(dest => dest.Username, opt => opt.MapFrom(x => x.Ds_usuario))
                 .ForMember(dest => dest.Email, opt => opt.MapFrom(x => x.Ds_email));
+
+            CreateMap<UserCredentials, Tb_usuario>()
+                .ForMember(dest => dest.Ds_email, opt => opt.MapFrom(x => x.Email))
+                .ForMember(dest => dest.Hx_password, opt => opt.MapFrom(x => x.Password));
+
         }
     }
 }
