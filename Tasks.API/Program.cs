@@ -1,12 +1,9 @@
+using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Tasks.API.Data;
 
 namespace Tasks.API
@@ -19,7 +16,6 @@ namespace Tasks.API
             CreateDbIfNotExists(host);
             host.Run();
         }
-
 
         public static void CreateDbIfNotExists(IHost host)
         {
@@ -40,9 +36,9 @@ namespace Tasks.API
             }
         }
 
-
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .UseServiceProviderFactory(new AutofacServiceProviderFactory())
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

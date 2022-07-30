@@ -1,12 +1,9 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Tasks.API.JwtToken
 {
@@ -65,7 +62,7 @@ namespace Tasks.API.JwtToken
         /// </summary>
         /// <param name="accessToken">Token de acesso (JWT)</param>
         /// <returns>Claims do JWT</returns>
-        public ClaimsPrincipal GetPrncipalFromExpiredToken(string accessToken)
+        public TokenApplicationInfo GetClaimsFromExpiredToken(string accessToken)
         {
             var tokenValidationParameters = new TokenValidationParameters()
             {
@@ -90,7 +87,24 @@ namespace Tasks.API.JwtToken
             )
                 throw new SecurityTokenException("Token inválido.");
 
-            return principal;
+            var identity = principal.Identity as ClaimsIdentity;
+            return GetDataClaims(identity);
+        }
+
+        /// <summary>
+        /// Obtem os valores das claims gravada no token JWT
+        /// </summary>
+        /// <param name="identity">Claims do Token JWT</param>
+        public TokenApplicationInfo GetDataClaims(ClaimsIdentity identity)
+        {
+            TokenApplicationInfo tokenInfo = new TokenApplicationInfo();
+            if (identity.IsAuthenticated)
+            {
+                tokenInfo.IdUser =
+                    int.Parse(identity.FindFirst("idUser").Value);
+            }
+
+            return tokenInfo;
         }
 
     }
