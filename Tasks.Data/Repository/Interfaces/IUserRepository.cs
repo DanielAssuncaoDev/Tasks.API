@@ -10,7 +10,7 @@ namespace Tasks.API.Data.Repository.Interfaces
         void RefreshUserToken(ITb_usuario user);
         void RevokeToken(int userId);
         Tb_usuario GetByEmail(string email);
-        void SetActivationKey(int key, string email);
+        int SetActivationKey(int key, string email);
         void ActivateAccount(int idUser);
 
     }

@@ -86,7 +86,8 @@ namespace Tasks.API.Data.Repository
         /// </summary>
         /// <param name="key">Chave de ativação</param>
         /// <param name="email">E-mail do usuário em que sera gravada a chave de ativação</param>
-        public void SetActivationKey(int key, string email)
+        /// <returns>Id do usuário mem que foi setada a chave de ativação</returns>
+        public int SetActivationKey(int key, string email)
         {
             var user = GetByEmail(email);
             if (user is null)
@@ -96,6 +97,7 @@ namespace Tasks.API.Data.Repository
 
             user.Cd_ativacaoEmail = key;
             _context.SaveChanges();
+            return user.Pk_id;
         }
 
         /// <summary>

@@ -63,26 +63,26 @@ namespace Tasks.API.Domain.Service
         public Tb_usuario GetByEmail(string email) =>
             _userRepository.GetByEmail(email);
 
-        public void SendActivationKey(UserEmail userEmail)
+        public UserResponseId SendActivationKey(UserEmail userEmail)
         {
             var random = new Random();
             int keyActivation = random.Next(100000, 999999);
-            _userRepository.SetActivationKey(keyActivation, userEmail.Email);
+            int userId = _userRepository.SetActivationKey(keyActivation, userEmail.Email);
 
             var emailService = new EmailService(userEmail.Email, keyActivation.ToString());
             emailService.SendEmail();
+            return new UserResponseId(userId);
         }
 
-        public void ActivateAccount(UserActivateAccount userActivateAccount)
+        public void ActivateAccount(int userId, int key)
         {
-            var user = GetByEmail(userActivateAccount.Email);
+            var user = GetById(userId);
             if (user is null)
-                throw new Exception($"Não foi encontrado nenhum usuário com o e-mail {userActivateAccount.Email}");
-
-            if (user.Cd_ativacaoEmail != userActivateAccount.Key)
+                throw new Exception($"Não foi encontrado nenhum usuário para a ativação.");
+            if (user.Cd_ativacaoEmail != key)
                 throw new Exception("Código de ativação inválido.");
 
-            _userRepository.ActivateAccount(user.Pk_id);
+            _userRepository.ActivateAccount(userId);
         }
 
         #endregion
