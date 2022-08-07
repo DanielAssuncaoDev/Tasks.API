@@ -37,7 +37,7 @@ namespace Tasks.API.Data.Model
         /// Data de expiração para o Refresh token
         /// </summary>
         [Column(TypeName = "Datetime")]
-        public DateTime? Dh_expirationrefreshtoken { get; set; }
+        public DateTime? Dh_expiracaorefreshtoken { get; set; }
 
         /// <summary>
         /// Flag para controlar se o e-mail do usuário já foi ativado

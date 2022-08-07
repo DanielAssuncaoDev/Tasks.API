@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Tasks.API.Domain.Dto.Usuario
 {
-    public class UserDto
+    public class User
     {
         public string Username { get; set; }
         public string Email { get; set; }

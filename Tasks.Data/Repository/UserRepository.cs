@@ -29,8 +29,6 @@ namespace Tasks.API.Data.Repository
             user.Hx_password = model.Hx_password;
             user.Hx_refreshtoken = model.Hx_refreshtoken;
             user.Dh_expirationrefreshtoken = model.Dh_expirationrefreshtoken;
-            user.Dh_inclusao = DateTime.Now;
-            user.Tg_inativo = false;
 
             _context.SaveChanges();
             return user;
@@ -104,9 +102,9 @@ namespace Tasks.API.Data.Repository
         /// Ativa a conta do usuário com o Id passado por parâmetro
         /// </summary>
         /// <param name="idUser">Id do usuário a ser ativado</param>
-        public void ActivateAccount(int idUser)
+        public void ActivateAccount(int userId)
         {
-            var user = GetById(idUser);
+            var user = GetById(userId);
             if (user is null)
                 throw new Exception("Usuário não encontrado.");
 
@@ -115,6 +113,5 @@ namespace Tasks.API.Data.Repository
 
             _context.SaveChanges();
         }
-
     }
 }

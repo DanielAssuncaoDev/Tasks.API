@@ -22,7 +22,7 @@ namespace Tasks.API.JwtToken
         /// </summary>
         /// <param name="credentials">Objeto com as credenciais do usuário</param>
         /// <returns>Token de acesso JWT</returns>
-        public TokenResponse GenerateToken(UserCredentials credentials)
+        public Token GenerateToken(UserCredentials credentials)
         {
             var user = _userService.CredentialsValid(credentials);
             if (user is null)
@@ -42,7 +42,7 @@ namespace Tasks.API.JwtToken
             user.Dh_expirationrefreshtoken = DateTime.UtcNow.AddDays(1);
             _userService.RefreshUserToken(user);
 
-            return new TokenResponse()
+            return new Token()
             {
                 AccessToken = accessToken,
                 RefreshToken = refreshToken
@@ -54,7 +54,7 @@ namespace Tasks.API.JwtToken
         /// </summary>
         /// <param name="token">Objeto com o AccessToken e RefreshToken</param>
         /// <returns>Um novo AccessToken para o usuário</returns>
-        public TokenResponse RefreshToken(TokenRequest token)
+        public Token RefreshToken(Token token)
         {
             var refreshToken = token.RefreshToken;
             var tokenInfo = _tokenService.GetClaimsFromExpiredToken(token.AccessToken);        
@@ -80,7 +80,7 @@ namespace Tasks.API.JwtToken
             user.Dh_expirationrefreshtoken = DateTime.UtcNow.AddDays(1);
             _userService.RefreshUserToken(user);
 
-            return new TokenResponse()
+            return new Token()
             {
                 AccessToken = accessToken,
                 RefreshToken = refreshToken

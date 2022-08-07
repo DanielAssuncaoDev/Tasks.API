@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Runtime.InteropServices;
+﻿using System.Linq;
 using Tasks.API.Data.Model.Interfaces;
 
 namespace Tasks.API.Data.Repository.Interfaces.Default
@@ -8,7 +7,7 @@ namespace Tasks.API.Data.Repository.Interfaces.Default
         where TModel: IColumnsDefault
     {
         TModel GetById(int id);
-        IEnumerable<TModel> GetAll();
+        IQueryable<TModel> GetAll();
         int Create(TInterface model);
         TModel Update(TInterface model, int id);
         bool ChangeActivation(int id);

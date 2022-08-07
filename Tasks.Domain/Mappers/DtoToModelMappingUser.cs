@@ -15,7 +15,7 @@ namespace Tasks.API.Domain.Mappers
 
         private void Map()
         {
-            CreateMap<UserDto, ITb_usuario>()
+            CreateMap<User, ITb_usuario>()
                 .ConstructUsing(src => new Tb_usuario())
                 .ForMember(dest => dest.Ds_usuario, opt => opt.MapFrom(x => x.Username))
                 .ForMember(dest => dest.Ds_email, opt => opt.MapFrom(x => x.Email))

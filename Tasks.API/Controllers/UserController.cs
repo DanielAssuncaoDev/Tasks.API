@@ -33,7 +33,7 @@ namespace Tasks.API.Controllers
         /// <returns>Id do usuário cadastrado.</returns>
         [Route("SingUp")]
         [HttpPost]
-        public ActionResult<UserResponseId> CreateUser([FromBody] UserDto user) =>
+        public ActionResult<UserResponseId> CreateUser([FromBody] User user) =>
             Ok(_userService.CreateUser(user));
 
         #endregion
@@ -47,7 +47,7 @@ namespace Tasks.API.Controllers
         /// <returns>Token JWT para o usuário acessar as outras rotas e um Refresh Token para o usuário poder recuperar o Token de acesso quando o mesmo estiver expirado.</returns>
         [Route("Login")]
         [HttpPost]
-        public ActionResult<TokenResponse> Login([FromBody] UserCredentials credentials) =>
+        public ActionResult<Token> Login([FromBody] UserCredentials credentials) =>
             Ok(_loginService.GenerateToken(credentials));
 
         #endregion
@@ -61,7 +61,7 @@ namespace Tasks.API.Controllers
         /// <returns>Um novo token de acesso e um novo Refresh Token.</returns>
         [Route("RefreshToken")]
         [HttpPut]
-        public ActionResult<TokenResponse> RefreshToken([FromBody] TokenRequest tokenRequest) =>
+        public ActionResult<Token> RefreshToken([FromBody] Token tokenRequest) =>
             Ok(_loginService.RefreshToken(tokenRequest));
             
         #endregion

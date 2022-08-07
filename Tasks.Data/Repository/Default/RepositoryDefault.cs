@@ -1,9 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Threading.Tasks;
+using System.Reflection;
 using Tasks.API.Data.Model;
 using Tasks.API.Data.Model.Interfaces;
 using Tasks.API.Data.Repository.Interfaces.Default;
@@ -12,12 +10,12 @@ namespace Tasks.API.Data.Repository.Default
 {
     public abstract class RepositoryDefault<TModel, TInterface> : IRepositoryDefault<TModel, TInterface>
         where TModel: ColumnsDefault 
+        where TInterface: IColumnsDefault
     {
         /// <summary>
         /// Entidade utilizada
         /// </summary>
         protected readonly DbSet<TModel> _dataset;
-
         /// <summary>
         /// Contexto para fazer requisições no banco de dados
         /// </summary>
@@ -65,10 +63,8 @@ namespace Tasks.API.Data.Repository.Default
         /// Busca todos os registros da entidade específicada
         /// </summary>
         /// <returns>Os regitros da entidade</returns>
-        public virtual IEnumerable<TModel> GetAll()
-        {
-            return _dataset;
-        }
+        public virtual IQueryable<TModel> GetAll() =>
+            _dataset;
 
         /// <summary>
         /// Busca o registro cujo o id seja passado por parâmetro
@@ -80,9 +76,35 @@ namespace Tasks.API.Data.Repository.Default
             return _dataset.FirstOrDefault(m => m.Pk_id == id);
         }
 
+        /// <summary>
+        /// Altera uma entidade do tipo generico da classe
+        /// </summary>
+        /// <param name="model">Entidade que com os dados que devem ser alterados na base de dados</param>
+        /// <param name="id">Id da entidade que deve ser alterada</param>
+        /// <returns>A entidade já alterada</returns>
         public virtual TModel Update(TInterface model, int id)
         {
-            throw new NotImplementedException();
+            var newModelProperties = model.GetType().GetProperties().ToList();
+         
+            var entityOld = GetById(id);
+            var oldModelProperties = entityOld.GetType().GetProperties().ToList();
+            var notCanUpdate = new ColumnsDefault().GetType().GetProperties().ToList();
+
+            foreach (PropertyInfo propertyNew in newModelProperties) 
+            {
+                if (notCanUpdate.Any(x => x.Name.Equals(propertyNew.Name)))
+                    continue;
+
+                var propertyOld = oldModelProperties
+                    .FirstOrDefault(x => x.Name.Equals(propertyNew.Name));
+                if (propertyOld is null)
+                    continue;
+
+                propertyOld.SetValue(entityOld, propertyNew.GetValue(model));
+            }
+
+            _context.SaveChanges();
+            return entityOld;
         }
     }
 }

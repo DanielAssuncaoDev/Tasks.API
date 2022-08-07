@@ -7,7 +7,7 @@ using Tasks.API.Data.Model.Interfaces;
 
 namespace Tasks.API.Data.Model
 {
-    public class Tb_usertotask : ColumnsDefault, ITb_usertotask
+    public class Tb_responsavelTask : ColumnsDefault, ITb_usertotask
     {
         /// <summary>
         /// Usuário responsável pela Task

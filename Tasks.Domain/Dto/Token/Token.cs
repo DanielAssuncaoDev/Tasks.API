@@ -1,9 +1,8 @@
 ﻿namespace Tasks.API.Domain.Dto.Token
 {
-    public class TokenRequest
+    public class Token 
     {
+        public string AccessToken { get; set; }
         public string RefreshToken { get; set; }
-        public virtual string AccessToken { get; set; }
-
     }
 }

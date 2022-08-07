@@ -47,7 +47,7 @@ namespace Tasks.API.Domain.Service
         public void RevokeToken(int userId) =>
             _userRepository.RevokeToken(userId);
 
-        public UserResponseId CreateUser(UserDto userDto)
+        public UserResponseId CreateUser(User userDto)
         {
             ValidateData(userDto);
 
@@ -101,7 +101,7 @@ namespace Tasks.API.Domain.Service
 
         #region Validações de cadastro
 
-        private void ValidateData(UserDto user)
+        private void ValidateData(User user)
         {
             user.Email.Trim();
             user.Password.Trim();
