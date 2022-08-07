@@ -13,6 +13,7 @@ using System.Text;
 using Tasks.API.Data;
 using Tasks.API.DependencyInjection;
 using Tasks.API.JwtToken;
+using Tasks.Data;
 
 namespace Tasks.API
 {
@@ -28,9 +29,10 @@ namespace Tasks.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var dbContextFactory = new DbContextFactory();
 
             services.AddDbContext<SqlServerContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
+                dbContextFactory.GetDbContextOptionsBuilder<SqlServerContext>()
             );
 
             services.AddControllers();

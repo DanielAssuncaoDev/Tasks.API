@@ -39,7 +39,7 @@ namespace Tasks.API.JwtToken
             var refreshToken = _tokenService.GenerateRefreshToken();
 
             user.Hx_refreshtoken = refreshToken;
-            user.Dh_expirationrefreshtoken = DateTime.UtcNow.AddDays(1);
+            user.Dh_expiracaorefreshtoken = DateTime.UtcNow.AddDays(1);
             _userService.RefreshUserToken(user);
 
             return new Token()
@@ -65,7 +65,7 @@ namespace Tasks.API.JwtToken
 
             if (user.Hx_refreshtoken != refreshToken)
                 throw new Exception("RefreshToken inválido.");
-            if (user.Dh_expirationrefreshtoken < DateTime.Now)
+            if (user.Dh_expiracaorefreshtoken < DateTime.Now)
                 throw new Exception("RefreshToken inspirado, logue-se novamente.");
             
             var accessToken = _tokenService.GenerateAccessToken(
@@ -77,7 +77,7 @@ namespace Tasks.API.JwtToken
             refreshToken = _tokenService.GenerateRefreshToken();
 
             user.Hx_refreshtoken = refreshToken;
-            user.Dh_expirationrefreshtoken = DateTime.UtcNow.AddDays(1);
+            user.Dh_expiracaorefreshtoken = DateTime.UtcNow.AddDays(1);
             _userService.RefreshUserToken(user);
 
             return new Token()

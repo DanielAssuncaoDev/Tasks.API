@@ -28,7 +28,7 @@ namespace Tasks.API.Data.Repository
             user.Ds_email = model.Ds_email;
             user.Hx_password = model.Hx_password;
             user.Hx_refreshtoken = model.Hx_refreshtoken;
-            user.Dh_expirationrefreshtoken = model.Dh_expirationrefreshtoken;
+            user.Dh_expiracaorefreshtoken = model.Dh_expiracaorefreshtoken;
 
             _context.SaveChanges();
             return user;
@@ -50,7 +50,7 @@ namespace Tasks.API.Data.Repository
         {
             var userOldToken = GetById(user.Pk_id);
             userOldToken.Hx_refreshtoken = user.Hx_refreshtoken;
-            userOldToken.Dh_expirationrefreshtoken = user.Dh_expirationrefreshtoken;
+            userOldToken.Dh_expiracaorefreshtoken = user.Dh_expiracaorefreshtoken;
 
             _context.SaveChanges();
         }
@@ -65,7 +65,7 @@ namespace Tasks.API.Data.Repository
             if (user is null)
                 throw new Exception("O usuário é inválido");
 
-            user.Dh_expirationrefreshtoken = null;
+            user.Dh_expiracaorefreshtoken = null;
             user.Hx_refreshtoken = null;
             _context.SaveChanges();
         }
