@@ -1,11 +1,11 @@
 ﻿using Autofac;
 using AutoMapper;
-using Tasks.API.Data.Repository;
-using Tasks.API.Data.Repository.Interfaces;
-using Tasks.API.Domain.Mappers;
-using Tasks.API.Domain.Service;
+using Tasks.Data.Repository;
+using Tasks.Data.Repository.Interfaces;
+using Tasks.Domain.Mappers;
+using Tasks.Domain.Service;
 
-namespace Tasks.API.DependencyInjection
+namespace Tasks.Domain.DependencyInjection
 {
     public class ConfigurationIOC
     {

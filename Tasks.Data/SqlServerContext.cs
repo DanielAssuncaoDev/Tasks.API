@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Tasks.API.Data.Model;
 using System.Linq;
-using Tasks.API.Data.Model.Interfaces;
 using System;
+using Tasks.Data.Model;
+using Tasks.Data.Model.Interfaces;
 
-namespace Tasks.API.Data
+namespace Tasks.Data
 {
     public class SqlServerContext : DbContext
     {

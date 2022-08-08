@@ -3,8 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Tasks.API.Data;
+using Tasks.Data;
 
 namespace Tasks.API.Data.Migrations
 {
@@ -446,13 +445,13 @@ namespace Tasks.API.Data.Migrations
                     b.HasOne("Tasks.API.Data.Model.Tb_usuario", "UsuarioCriador")
                         .WithMany()
                         .HasForeignKey("Fk_owner")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Tasks.API.Data.Tb_task", "Task")
                         .WithMany()
                         .HasForeignKey("Fk_task")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Task");
@@ -469,7 +468,7 @@ namespace Tasks.API.Data.Migrations
                     b.HasOne("Tasks.API.Data.Model.Tb_workspace", "Workspace")
                         .WithMany()
                         .HasForeignKey("Fk_workspace")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Status");
@@ -482,7 +481,7 @@ namespace Tasks.API.Data.Migrations
                     b.HasOne("Tasks.API.Data.Tb_task", "Task")
                         .WithMany()
                         .HasForeignKey("Fk_task")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Task");
@@ -502,13 +501,13 @@ namespace Tasks.API.Data.Migrations
                     b.HasOne("Tasks.API.Data.Model.Tb_etiqueta", "Etiqueta")
                         .WithMany()
                         .HasForeignKey("Fk_etiqueta")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Tasks.API.Data.Tb_task", "Task")
                         .WithMany()
                         .HasForeignKey("Fk_task")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Etiqueta");
@@ -521,13 +520,13 @@ namespace Tasks.API.Data.Migrations
                     b.HasOne("Tasks.API.Data.Model.Tb_usuario", "Usuario")
                         .WithMany()
                         .HasForeignKey("Fk_user")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Tasks.API.Data.Model.Tb_workspace", "Workspace")
                         .WithMany()
                         .HasForeignKey("Fk_workspace")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Usuario");
@@ -540,7 +539,7 @@ namespace Tasks.API.Data.Migrations
                     b.HasOne("Tasks.API.Data.Model.Tb_checklist", "Checklist")
                         .WithMany()
                         .HasForeignKey("Fk_checklist")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Checklist");
@@ -551,13 +550,13 @@ namespace Tasks.API.Data.Migrations
                     b.HasOne("Tasks.API.Data.Tb_task", "Task")
                         .WithMany()
                         .HasForeignKey("Fk_task")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Tasks.API.Data.Model.Tb_usuario", "Usuario")
                         .WithMany()
                         .HasForeignKey("Fk_user")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Task");
@@ -579,7 +578,7 @@ namespace Tasks.API.Data.Migrations
                     b.HasOne("Tasks.API.Data.Model.Tb_usuario", "Usuario")
                         .WithMany()
                         .HasForeignKey("Fk_owner")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Usuario");
@@ -590,19 +589,19 @@ namespace Tasks.API.Data.Migrations
                     b.HasOne("Tasks.API.Data.Model.Tb_bucket", "Bucket")
                         .WithMany()
                         .HasForeignKey("Fk_bucket")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Tasks.API.Data.Model.Tb_usuario", "Owner")
                         .WithMany()
                         .HasForeignKey("Fk_owner")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Tasks.API.Data.Model.Tb_status", "Status")
                         .WithMany()
                         .HasForeignKey("Fk_status")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Tasks.API.Data.Model.Tb_usuario", "UserAlteradorStatus")

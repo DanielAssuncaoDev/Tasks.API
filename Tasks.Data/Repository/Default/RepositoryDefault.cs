@@ -2,11 +2,11 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using Tasks.API.Data.Model;
-using Tasks.API.Data.Model.Interfaces;
-using Tasks.API.Data.Repository.Interfaces.Default;
+using Tasks.Data.Model;
+using Tasks.Data.Model.Interfaces;
+using Tasks.Data.Repository.Interfaces.Default;
 
-namespace Tasks.API.Data.Repository.Default
+namespace Tasks.Data.Repository.Default
 {
     public abstract class RepositoryDefault<TModel, TInterface> : IRepositoryDefault<TModel, TInterface>
         where TModel: ColumnsDefault 

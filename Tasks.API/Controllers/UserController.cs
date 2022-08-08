@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using Tasks.API.Domain.Dto;
-using Tasks.API.Domain.Dto.Token;
-using Tasks.API.Domain.Dto.Usuario;
-using Tasks.API.Domain.Service;
 using Tasks.API.JwtToken;
+using Tasks.Domain.Dto.Token;
+using Tasks.Domain.Dto.Usuario;
+using Tasks.Domain.Service;
 
 namespace Tasks.API.Controllers
 {

@@ -10,10 +10,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
-using Tasks.API.Data;
-using Tasks.API.DependencyInjection;
 using Tasks.API.JwtToken;
 using Tasks.Data;
+using Tasks.Domain.DependencyInjection;
 
 namespace Tasks.API
 {
@@ -30,9 +29,8 @@ namespace Tasks.API
         public void ConfigureServices(IServiceCollection services)
         {
             var dbContextFactory = new DbContextFactory();
-
             services.AddDbContext<SqlServerContext>(options =>
-                dbContextFactory.GetDbContextOptionsBuilder<SqlServerContext>()
+              options.UseSqlServer(dbContextFactory.ConnectionString)
             );
 
             services.AddControllers();

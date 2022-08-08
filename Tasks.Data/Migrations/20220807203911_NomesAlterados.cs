@@ -130,13 +130,13 @@ namespace Tasks.API.Migrations
                         column: x => x.Fk_task,
                         principalTable: "Tb_task",
                         principalColumn: "Pk_id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Tb_usertotask_Tb_usuario_Fk_user",
                         column: x => x.Fk_user,
                         principalTable: "Tb_usuario",
                         principalColumn: "Pk_id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -159,13 +159,13 @@ namespace Tasks.API.Migrations
                         column: x => x.Fk_user,
                         principalTable: "Tb_usuario",
                         principalColumn: "Pk_id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Tb_userworkspace_Tb_workspace_Fk_workspace",
                         column: x => x.Fk_workspace,
                         principalTable: "Tb_workspace",
                         principalColumn: "Pk_id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateIndex(

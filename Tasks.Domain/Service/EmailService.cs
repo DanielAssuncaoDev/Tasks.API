@@ -2,7 +2,7 @@
 using System.Net;
 using System.Net.Mail;
 
-namespace Tasks.API.Domain.Service
+namespace Tasks.Domain.Service
 {
     public class EmailService
     {

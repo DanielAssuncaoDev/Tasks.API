@@ -1,4 +1,4 @@
-﻿namespace Tasks.API.Domain.Dto.Token
+﻿namespace Tasks.Domain.Dto.Token
 {
     public class Token 
     {

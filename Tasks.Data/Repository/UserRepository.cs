@@ -1,11 +1,11 @@
 ﻿using System;
-using Tasks.API.Data.Model;
-using Tasks.API.Data.Repository.Default;
-using Tasks.API.Data.Repository.Interfaces;
 using System.Linq;
-using Tasks.API.Data.Model.Interfaces;
+using Tasks.Data.Repository.Default;
+using Tasks.Data.Model;
+using Tasks.Data.Model.Interfaces;
+using Tasks.Data.Repository.Interfaces;
 
-namespace Tasks.API.Data.Repository
+namespace Tasks.Data.Repository
 {
     public class UserRepository : RepositoryDefault<Tb_usuario, ITb_usuario>, IUserRepository
     {

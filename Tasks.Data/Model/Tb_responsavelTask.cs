@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
-using Tasks.API.Data.Model.Interfaces;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Tasks.API.Data.Model
+namespace Tasks.Data.Model
 {
     public class Tb_responsavelTask : ColumnsDefault, ITb_usertotask
     {

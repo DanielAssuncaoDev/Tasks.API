@@ -1,7 +1,7 @@
 ﻿using System.Linq;
-using Tasks.API.Data.Model.Interfaces;
+using Tasks.Data.Model.Interfaces;
 
-namespace Tasks.API.Data.Repository.Interfaces.Default
+namespace Tasks.Data.Repository.Interfaces.Default
 {
     public interface IRepositoryDefault <TModel, TInterface> 
         where TModel: IColumnsDefault

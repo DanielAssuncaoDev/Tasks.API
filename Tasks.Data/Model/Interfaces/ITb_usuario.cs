@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Tasks.API.Data.Model.Interfaces
+namespace Tasks.Data.Model.Interfaces
 {
     public interface ITb_usuario : IColumnsDefault
     {

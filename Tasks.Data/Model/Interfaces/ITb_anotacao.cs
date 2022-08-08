@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Tasks.Data.Model.Interfaces;
 
-namespace Tasks.API.Data.Model.Interfaces
+namespace Tasks.Data.Model.Interfaces
 {
     interface ITb_anotacao : IColumnsDefault
     {

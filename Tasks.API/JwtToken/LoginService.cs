@@ -1,8 +1,7 @@
 ﻿using System;
-using Tasks.API.Domain.Dto;
-using Tasks.API.Domain.Dto.Token;
-using Tasks.API.Domain.Service;
-using Tasks.API.JwtToken;
+using Tasks.Domain.Dto.Token;
+using Tasks.Domain.Dto.Usuario;
+using Tasks.Domain.Service;
 
 namespace Tasks.API.JwtToken
 {
@@ -27,19 +26,19 @@ namespace Tasks.API.JwtToken
             var user = _userService.CredentialsValid(credentials);
             if (user is null)
                 throw new Exception("Credenciais inválidas.");
-            if (!user.Tg_emailAtivo)
+            if (!user.IsActiveEmail)
                 throw new Exception("Conta não está ativada, ative sua conta para fazer o login.");
 
             var accessToken = _tokenService.GenerateAccessToken(
                     new TokenConfiguration()
                     {
-                        TokenApplicationInfo = new TokenApplicationInfo() { IdUser = user.Pk_id }
+                        TokenApplicationInfo = new TokenApplicationInfo() { IdUser = user.Id }
                     }
                 );
             var refreshToken = _tokenService.GenerateRefreshToken();
 
-            user.Hx_refreshtoken = refreshToken;
-            user.Dh_expiracaorefreshtoken = DateTime.UtcNow.AddDays(1);
+            user.Refreshtoken = refreshToken;
+            user.ExpirationRefreshToken = DateTime.UtcNow.AddDays(1);
             _userService.RefreshUserToken(user);
 
             return new Token()
@@ -63,21 +62,21 @@ namespace Tasks.API.JwtToken
             if (user is null)
                 return null;
 
-            if (user.Hx_refreshtoken != refreshToken)
+            if (user.Refreshtoken != refreshToken)
                 throw new Exception("RefreshToken inválido.");
-            if (user.Dh_expiracaorefreshtoken < DateTime.Now)
+            if (user.ExpirationRefreshToken < DateTime.Now)
                 throw new Exception("RefreshToken inspirado, logue-se novamente.");
             
             var accessToken = _tokenService.GenerateAccessToken(
                 new TokenConfiguration()
                 {
-                    TokenApplicationInfo = new TokenApplicationInfo() { IdUser = user.Pk_id }
+                    TokenApplicationInfo = new TokenApplicationInfo() { IdUser = user.Id }
                 }
             );
             refreshToken = _tokenService.GenerateRefreshToken();
 
-            user.Hx_refreshtoken = refreshToken;
-            user.Dh_expiracaorefreshtoken = DateTime.UtcNow.AddDays(1);
+            user.Refreshtoken = refreshToken;
+            user.ExpirationRefreshToken = DateTime.UtcNow.AddDays(1);
             _userService.RefreshUserToken(user);
 
             return new Token()
