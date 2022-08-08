@@ -9,8 +9,8 @@ using Tasks.Data;
 namespace Tasks.API.Migrations
 {
     [DbContext(typeof(SqlServerContext))]
-    [Migration("20220709192749_AddCampos-ControleAtivacaoEmail")]
-    partial class AddCamposControleAtivacaoEmail
+    [Migration("20220807203911_NomesAlterados")]
+    partial class NomesAlterados
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -189,6 +189,37 @@ namespace Tasks.API.Migrations
                     b.ToTable("Tb_etiquetatask");
                 });
 
+            modelBuilder.Entity("Tasks.API.Data.Model.Tb_integrante", b =>
+                {
+                    b.Property<int>("Pk_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime?>("Dh_alteracao")
+                        .HasColumnType("Datetime");
+
+                    b.Property<DateTime>("Dh_inclusao")
+                        .HasColumnType("Datetime");
+
+                    b.Property<int>("Fk_user")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Fk_workspace")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Tg_inativo")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Pk_id");
+
+                    b.HasIndex("Fk_user");
+
+                    b.HasIndex("Fk_workspace");
+
+                    b.ToTable("Tb_integrante");
+                });
+
             modelBuilder.Entity("Tasks.API.Data.Model.Tb_itemchecklist", b =>
                 {
                     b.Property<int>("Pk_id")
@@ -219,6 +250,37 @@ namespace Tasks.API.Migrations
                     b.HasIndex("Fk_checklist");
 
                     b.ToTable("Tb_itemchecklist");
+                });
+
+            modelBuilder.Entity("Tasks.API.Data.Model.Tb_responsavelTask", b =>
+                {
+                    b.Property<int>("Pk_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime?>("Dh_alteracao")
+                        .HasColumnType("Datetime");
+
+                    b.Property<DateTime>("Dh_inclusao")
+                        .HasColumnType("Datetime");
+
+                    b.Property<int>("Fk_task")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Fk_user")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Tg_inativo")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Pk_id");
+
+                    b.HasIndex("Fk_task");
+
+                    b.HasIndex("Fk_user");
+
+                    b.ToTable("Tb_responsavelTask");
                 });
 
             modelBuilder.Entity("Tasks.API.Data.Model.Tb_status", b =>
@@ -253,68 +315,6 @@ namespace Tasks.API.Migrations
                     b.ToTable("Tb_status");
                 });
 
-            modelBuilder.Entity("Tasks.API.Data.Model.Tb_usertotask", b =>
-                {
-                    b.Property<int>("Pk_id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime?>("Dh_alteracao")
-                        .HasColumnType("Datetime");
-
-                    b.Property<DateTime>("Dh_inclusao")
-                        .HasColumnType("Datetime");
-
-                    b.Property<int>("Fk_task")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Fk_user")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Tg_inativo")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Pk_id");
-
-                    b.HasIndex("Fk_task");
-
-                    b.HasIndex("Fk_user");
-
-                    b.ToTable("Tb_usertotask");
-                });
-
-            modelBuilder.Entity("Tasks.API.Data.Model.Tb_userworkspace", b =>
-                {
-                    b.Property<int>("Pk_id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime?>("Dh_alteracao")
-                        .HasColumnType("Datetime");
-
-                    b.Property<DateTime>("Dh_inclusao")
-                        .HasColumnType("Datetime");
-
-                    b.Property<int>("Fk_user")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Fk_workspace")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Tg_inativo")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Pk_id");
-
-                    b.HasIndex("Fk_user");
-
-                    b.HasIndex("Fk_workspace");
-
-                    b.ToTable("Tb_userworkspace");
-                });
-
             modelBuilder.Entity("Tasks.API.Data.Model.Tb_usuario", b =>
                 {
                     b.Property<int>("Pk_id")
@@ -328,7 +328,7 @@ namespace Tasks.API.Migrations
                     b.Property<DateTime?>("Dh_alteracao")
                         .HasColumnType("Datetime");
 
-                    b.Property<DateTime?>("Dh_expirationrefreshtoken")
+                    b.Property<DateTime?>("Dh_expiracaorefreshtoken")
                         .HasColumnType("Datetime");
 
                     b.Property<DateTime>("Dh_inclusao")
@@ -447,13 +447,13 @@ namespace Tasks.API.Migrations
                     b.HasOne("Tasks.API.Data.Model.Tb_usuario", "UsuarioCriador")
                         .WithMany()
                         .HasForeignKey("Fk_owner")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Tasks.API.Data.Tb_task", "Task")
                         .WithMany()
                         .HasForeignKey("Fk_task")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Task");
@@ -470,7 +470,7 @@ namespace Tasks.API.Migrations
                     b.HasOne("Tasks.API.Data.Model.Tb_workspace", "Workspace")
                         .WithMany()
                         .HasForeignKey("Fk_workspace")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Status");
@@ -483,7 +483,7 @@ namespace Tasks.API.Migrations
                     b.HasOne("Tasks.API.Data.Tb_task", "Task")
                         .WithMany()
                         .HasForeignKey("Fk_task")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Task");
@@ -503,13 +503,13 @@ namespace Tasks.API.Migrations
                     b.HasOne("Tasks.API.Data.Model.Tb_etiqueta", "Etiqueta")
                         .WithMany()
                         .HasForeignKey("Fk_etiqueta")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Tasks.API.Data.Tb_task", "Task")
                         .WithMany()
                         .HasForeignKey("Fk_task")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Etiqueta");
@@ -517,15 +517,53 @@ namespace Tasks.API.Migrations
                     b.Navigation("Task");
                 });
 
+            modelBuilder.Entity("Tasks.API.Data.Model.Tb_integrante", b =>
+                {
+                    b.HasOne("Tasks.API.Data.Model.Tb_usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("Fk_user")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Tasks.API.Data.Model.Tb_workspace", "Workspace")
+                        .WithMany()
+                        .HasForeignKey("Fk_workspace")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Usuario");
+
+                    b.Navigation("Workspace");
+                });
+
             modelBuilder.Entity("Tasks.API.Data.Model.Tb_itemchecklist", b =>
                 {
                     b.HasOne("Tasks.API.Data.Model.Tb_checklist", "Checklist")
                         .WithMany()
                         .HasForeignKey("Fk_checklist")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Checklist");
+                });
+
+            modelBuilder.Entity("Tasks.API.Data.Model.Tb_responsavelTask", b =>
+                {
+                    b.HasOne("Tasks.API.Data.Tb_task", "Task")
+                        .WithMany()
+                        .HasForeignKey("Fk_task")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Tasks.API.Data.Model.Tb_usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("Fk_user")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Task");
+
+                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("Tasks.API.Data.Model.Tb_status", b =>
@@ -537,50 +575,12 @@ namespace Tasks.API.Migrations
                     b.Navigation("Workspace");
                 });
 
-            modelBuilder.Entity("Tasks.API.Data.Model.Tb_usertotask", b =>
-                {
-                    b.HasOne("Tasks.API.Data.Tb_task", "Task")
-                        .WithMany()
-                        .HasForeignKey("Fk_task")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Tasks.API.Data.Model.Tb_usuario", "Usuario")
-                        .WithMany()
-                        .HasForeignKey("Fk_user")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Task");
-
-                    b.Navigation("Usuario");
-                });
-
-            modelBuilder.Entity("Tasks.API.Data.Model.Tb_userworkspace", b =>
-                {
-                    b.HasOne("Tasks.API.Data.Model.Tb_usuario", "Usuario")
-                        .WithMany()
-                        .HasForeignKey("Fk_user")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Tasks.API.Data.Model.Tb_workspace", "Workspace")
-                        .WithMany()
-                        .HasForeignKey("Fk_workspace")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Usuario");
-
-                    b.Navigation("Workspace");
-                });
-
             modelBuilder.Entity("Tasks.API.Data.Model.Tb_workspace", b =>
                 {
                     b.HasOne("Tasks.API.Data.Model.Tb_usuario", "Usuario")
                         .WithMany()
                         .HasForeignKey("Fk_owner")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Usuario");
@@ -591,19 +591,19 @@ namespace Tasks.API.Migrations
                     b.HasOne("Tasks.API.Data.Model.Tb_bucket", "Bucket")
                         .WithMany()
                         .HasForeignKey("Fk_bucket")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Tasks.API.Data.Model.Tb_usuario", "Owner")
                         .WithMany()
                         .HasForeignKey("Fk_owner")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Tasks.API.Data.Model.Tb_status", "Status")
                         .WithMany()
                         .HasForeignKey("Fk_status")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Tasks.API.Data.Model.Tb_usuario", "UserAlteradorStatus")

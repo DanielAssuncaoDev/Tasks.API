@@ -1,11 +1,11 @@
 ﻿using System;
-using Tasks.API.Data.Model;
-using Tasks.API.Data.Repository.Default;
-using Tasks.API.Data.Repository.Interfaces;
 using System.Linq;
-using Tasks.API.Data.Model.Interfaces;
+using Tasks.Data.Repository.Default;
+using Tasks.Data.Model;
+using Tasks.Data.Model.Interfaces;
+using Tasks.Data.Repository.Interfaces;
 
-namespace Tasks.API.Data.Repository
+namespace Tasks.Data.Repository
 {
     public class UserRepository : RepositoryDefault<Tb_usuario, ITb_usuario>, IUserRepository
     {
@@ -28,9 +28,7 @@ namespace Tasks.API.Data.Repository
             user.Ds_email = model.Ds_email;
             user.Hx_password = model.Hx_password;
             user.Hx_refreshtoken = model.Hx_refreshtoken;
-            user.Dh_expirationrefreshtoken = model.Dh_expirationrefreshtoken;
-            user.Dh_inclusao = DateTime.Now;
-            user.Tg_inativo = false;
+            user.Dh_expiracaorefreshtoken = model.Dh_expiracaorefreshtoken;
 
             _context.SaveChanges();
             return user;
@@ -52,7 +50,7 @@ namespace Tasks.API.Data.Repository
         {
             var userOldToken = GetById(user.Pk_id);
             userOldToken.Hx_refreshtoken = user.Hx_refreshtoken;
-            userOldToken.Dh_expirationrefreshtoken = user.Dh_expirationrefreshtoken;
+            userOldToken.Dh_expiracaorefreshtoken = user.Dh_expiracaorefreshtoken;
 
             _context.SaveChanges();
         }
@@ -67,7 +65,7 @@ namespace Tasks.API.Data.Repository
             if (user is null)
                 throw new Exception("O usuário é inválido");
 
-            user.Dh_expirationrefreshtoken = null;
+            user.Dh_expiracaorefreshtoken = null;
             user.Hx_refreshtoken = null;
             _context.SaveChanges();
         }
@@ -86,7 +84,8 @@ namespace Tasks.API.Data.Repository
         /// </summary>
         /// <param name="key">Chave de ativação</param>
         /// <param name="email">E-mail do usuário em que sera gravada a chave de ativação</param>
-        public void SetActivationKey(int key, string email)
+        /// <returns>Id do usuário mem que foi setada a chave de ativação</returns>
+        public int SetActivationKey(int key, string email)
         {
             var user = GetByEmail(email);
             if (user is null)
@@ -96,15 +95,16 @@ namespace Tasks.API.Data.Repository
 
             user.Cd_ativacaoEmail = key;
             _context.SaveChanges();
+            return user.Pk_id;
         }
 
         /// <summary>
         /// Ativa a conta do usuário com o Id passado por parâmetro
         /// </summary>
         /// <param name="idUser">Id do usuário a ser ativado</param>
-        public void ActivateAccount(int idUser)
+        public void ActivateAccount(int userId)
         {
-            var user = GetById(idUser);
+            var user = GetById(userId);
             if (user is null)
                 throw new Exception("Usuário não encontrado.");
 
@@ -113,6 +113,5 @@ namespace Tasks.API.Data.Repository
 
             _context.SaveChanges();
         }
-
     }
 }

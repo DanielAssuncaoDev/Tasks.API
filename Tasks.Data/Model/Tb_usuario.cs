@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
-using Tasks.API.Data.Model.Interfaces;
+using Tasks.Data.Model.Interfaces;
 
-namespace Tasks.API.Data.Model
+namespace Tasks.Data.Model
 {
     public class Tb_usuario : ColumnsDefault, ITb_usuario
     {
@@ -37,7 +34,7 @@ namespace Tasks.API.Data.Model
         /// Data de expiração para o Refresh token
         /// </summary>
         [Column(TypeName = "Datetime")]
-        public DateTime? Dh_expirationrefreshtoken { get; set; }
+        public DateTime? Dh_expiracaorefreshtoken { get; set; }
 
         /// <summary>
         /// Flag para controlar se o e-mail do usuário já foi ativado

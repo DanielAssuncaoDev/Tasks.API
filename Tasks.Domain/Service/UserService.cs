@@ -5,13 +5,12 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
-using Tasks.API.Data.Model;
-using Tasks.API.Data.Model.Interfaces;
-using Tasks.API.Data.Repository.Interfaces;
-using Tasks.API.Domain.Dto;
-using Tasks.API.Domain.Dto.Usuario;
+using Tasks.Data.Model;
+using Tasks.Data.Model.Interfaces;
+using Tasks.Data.Repository.Interfaces;
+using Tasks.Domain.Dto.Usuario;
 
-namespace Tasks.API.Domain.Service
+namespace Tasks.Domain.Service
 {
     public class UserService 
     {
@@ -26,18 +25,23 @@ namespace Tasks.API.Domain.Service
 
         #region Serviços do usuário
 
-        public Tb_usuario CredentialsValid(UserCredentials credentials)
+        public UserDto CredentialsValid(UserCredentials credentials)
         {
             credentials.Password = EncryptPassword(credentials.Password);
             var userCredentials = _mapper.Map<Tb_usuario>(credentials);
-            return _userRepository.CredentialsValid(userCredentials);
+
+            return _mapper.Map<UserDto>(_userRepository.CredentialsValid(userCredentials));
         }            
 
-        public void RefreshUserToken(Tb_usuario user) =>
-            _userRepository.RefreshUserToken(user);
+        public void RefreshUserToken(UserDto user) =>
+            _userRepository.RefreshUserToken(
+                    _mapper.Map<Tb_usuario>(user)
+                );
 
-        public Tb_usuario GetById(int id) =>
-            _userRepository.GetById(id);
+        public UserDto GetById(int id) =>
+            _mapper.Map<UserDto>(
+                    _userRepository.GetById(id)
+                );
 
         public List<UserConsult> GetAll() =>
             _mapper.Map<List<UserConsult>>(
@@ -47,7 +51,7 @@ namespace Tasks.API.Domain.Service
         public void RevokeToken(int userId) =>
             _userRepository.RevokeToken(userId);
 
-        public UserResponseId CreateUser(UserDto userDto)
+        public UserResponseId CreateUser(User userDto)
         {
             ValidateData(userDto);
 
@@ -60,29 +64,31 @@ namespace Tasks.API.Domain.Service
             return new UserResponseId(IdUser);
         }
 
-        public Tb_usuario GetByEmail(string email) =>
-            _userRepository.GetByEmail(email);
+        public UserDto GetByEmail(string email) =>
+            _mapper.Map<UserDto>(
+                    _userRepository.GetByEmail(email)
+                );
 
-        public void SendActivationKey(UserEmail userEmail)
+        public UserResponseId SendActivationKey(UserEmail userEmail)
         {
             var random = new Random();
             int keyActivation = random.Next(100000, 999999);
-            _userRepository.SetActivationKey(keyActivation, userEmail.Email);
+            int userId = _userRepository.SetActivationKey(keyActivation, userEmail.Email);
 
             var emailService = new EmailService(userEmail.Email, keyActivation.ToString());
             emailService.SendEmail();
+            return new UserResponseId(userId);
         }
 
-        public void ActivateAccount(UserActivateAccount userActivateAccount)
+        public void ActivateAccount(int userId, int key)
         {
-            var user = GetByEmail(userActivateAccount.Email);
+            var user = GetById(userId);
             if (user is null)
-                throw new Exception($"Não foi encontrado nenhum usuário com o e-mail {userActivateAccount.Email}");
-
-            if (user.Cd_ativacaoEmail != userActivateAccount.Key)
+                throw new Exception($"Não foi encontrado nenhum usuário para a ativação.");
+            if (user.KeyActiveEmail != key)
                 throw new Exception("Código de ativação inválido.");
 
-            _userRepository.ActivateAccount(user.Pk_id);
+            _userRepository.ActivateAccount(userId);
         }
 
         #endregion
@@ -101,7 +107,7 @@ namespace Tasks.API.Domain.Service
 
         #region Validações de cadastro
 
-        private void ValidateData(UserDto user)
+        private void ValidateData(User user)
         {
             user.Email.Trim();
             user.Password.Trim();

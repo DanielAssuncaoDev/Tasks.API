@@ -1,8 +1,7 @@
 ﻿using System;
-using Tasks.API.Domain.Dto;
-using Tasks.API.Domain.Dto.Token;
-using Tasks.API.Domain.Service;
-using Tasks.API.JwtToken;
+using Tasks.Domain.Dto.Token;
+using Tasks.Domain.Dto.Usuario;
+using Tasks.Domain.Service;
 
 namespace Tasks.API.JwtToken
 {
@@ -22,27 +21,27 @@ namespace Tasks.API.JwtToken
         /// </summary>
         /// <param name="credentials">Objeto com as credenciais do usuário</param>
         /// <returns>Token de acesso JWT</returns>
-        public TokenResponse GenerateToken(UserCredentials credentials)
+        public Token GenerateToken(UserCredentials credentials)
         {
             var user = _userService.CredentialsValid(credentials);
             if (user is null)
                 throw new Exception("Credenciais inválidas.");
-            if (!user.Tg_emailAtivo)
+            if (!user.IsActiveEmail)
                 throw new Exception("Conta não está ativada, ative sua conta para fazer o login.");
 
             var accessToken = _tokenService.GenerateAccessToken(
                     new TokenConfiguration()
                     {
-                        TokenApplicationInfo = new TokenApplicationInfo() { IdUser = user.Pk_id }
+                        TokenApplicationInfo = new TokenApplicationInfo() { IdUser = user.Id }
                     }
                 );
             var refreshToken = _tokenService.GenerateRefreshToken();
 
-            user.Hx_refreshtoken = refreshToken;
-            user.Dh_expirationrefreshtoken = DateTime.UtcNow.AddDays(1);
+            user.Refreshtoken = refreshToken;
+            user.ExpirationRefreshToken = DateTime.UtcNow.AddDays(1);
             _userService.RefreshUserToken(user);
 
-            return new TokenResponse()
+            return new Token()
             {
                 AccessToken = accessToken,
                 RefreshToken = refreshToken
@@ -54,7 +53,7 @@ namespace Tasks.API.JwtToken
         /// </summary>
         /// <param name="token">Objeto com o AccessToken e RefreshToken</param>
         /// <returns>Um novo AccessToken para o usuário</returns>
-        public TokenResponse RefreshToken(TokenRequest token)
+        public Token RefreshToken(Token token)
         {
             var refreshToken = token.RefreshToken;
             var tokenInfo = _tokenService.GetClaimsFromExpiredToken(token.AccessToken);        
@@ -63,24 +62,24 @@ namespace Tasks.API.JwtToken
             if (user is null)
                 return null;
 
-            if (user.Hx_refreshtoken != refreshToken)
+            if (user.Refreshtoken != refreshToken)
                 throw new Exception("RefreshToken inválido.");
-            if (user.Dh_expirationrefreshtoken < DateTime.Now)
+            if (user.ExpirationRefreshToken < DateTime.Now)
                 throw new Exception("RefreshToken inspirado, logue-se novamente.");
             
             var accessToken = _tokenService.GenerateAccessToken(
                 new TokenConfiguration()
                 {
-                    TokenApplicationInfo = new TokenApplicationInfo() { IdUser = user.Pk_id }
+                    TokenApplicationInfo = new TokenApplicationInfo() { IdUser = user.Id }
                 }
             );
             refreshToken = _tokenService.GenerateRefreshToken();
 
-            user.Hx_refreshtoken = refreshToken;
-            user.Dh_expirationrefreshtoken = DateTime.UtcNow.AddDays(1);
+            user.Refreshtoken = refreshToken;
+            user.ExpirationRefreshToken = DateTime.UtcNow.AddDays(1);
             _userService.RefreshUserToken(user);
 
-            return new TokenResponse()
+            return new Token()
             {
                 AccessToken = accessToken,
                 RefreshToken = refreshToken

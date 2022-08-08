@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Tasks.API.Data
+﻿namespace Tasks.Data
 {
     public static class DbInitializer
     {

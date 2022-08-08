@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
-using Tasks.API.Data.Model.Interfaces;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Tasks.Data.Model.Interfaces;
 
-namespace Tasks.API.Data.Model
+namespace Tasks.Data.Model
 {
-    public class Tb_userworkspace : ColumnsDefault, ITb_userworkspace
+    public class Tb_integrante : ColumnsDefault, ITb_integrante
     {
         /// <summary>
         /// Usuário referente ao workspace
