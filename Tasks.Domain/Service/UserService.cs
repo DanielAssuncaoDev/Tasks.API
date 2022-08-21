@@ -9,6 +9,7 @@ using Tasks.Data.Model;
 using Tasks.Data.Model.Interfaces;
 using Tasks.Data.Repository.Interfaces;
 using Tasks.Domain.Dto.Usuario;
+using Tasks.Domain.ExceptionHandler;
 
 namespace Tasks.Domain.Service
 {
@@ -59,7 +60,7 @@ namespace Tasks.Domain.Service
             int IdUser = _userRepository.Create(_mapper.Map<ITb_usuario>(userDto));
 
             if (IdUser == default)
-                throw new Exception("Não foi possível cadastrar usuário.");
+                throw new DomainLayerException("Não foi possível cadastrar usuário.");
 
             return new UserResponseId(IdUser);
         }
@@ -84,9 +85,9 @@ namespace Tasks.Domain.Service
         {
             var user = GetById(userId);
             if (user is null)
-                throw new Exception($"Não foi encontrado nenhum usuário para a ativação.");
+                throw new DomainLayerException($"Não foi encontrado nenhum usuário para a ativação.");
             if (user.KeyActiveEmail != key)
-                throw new Exception("Código de ativação inválido.");
+                throw new DomainLayerException("Código de ativação inválido.");
 
             _userRepository.ActivateAccount(userId);
         }
@@ -120,31 +121,31 @@ namespace Tasks.Domain.Service
 
         private void ValidateEmail(string email)
         {
-            if (string.IsNullOrWhiteSpace(email)) throw new Exception("E-mail não pode estar vazio.");
-            if (!email.Contains('@')) throw new Exception("E-mail inválido.");
+            if (string.IsNullOrWhiteSpace(email)) throw new DomainLayerException("E-mail não pode estar vazio.");
+            if (!email.Contains('@')) throw new DomainLayerException("E-mail inválido.");
 
             string domain = email.Substring(email.IndexOf('@') + 1);
-            if (string.IsNullOrWhiteSpace(domain)) throw new Exception("E-mail inválido");
-            if (!domain.Contains('.')) throw new Exception("E-mail inválido.");
+            if (string.IsNullOrWhiteSpace(domain)) throw new DomainLayerException("E-mail inválido");
+            if (!domain.Contains('.')) throw new DomainLayerException("E-mail inválido.");
 
-            if (!(GetByEmail(email) is null)) throw new Exception("E-mail já cadastrado no sistema.\n Tente novamente com outro e-mail.");
+            if (!(GetByEmail(email) is null)) throw new DomainLayerException("E-mail já cadastrado no sistema.\n Tente novamente com outro e-mail.");
         }
 
         private void ValidateUsername(string username)
         {
-            if (string.IsNullOrWhiteSpace(username)) throw new Exception("Seu nome não pode estar vazio.");
-            if (!username.Contains(' ')) throw new Exception("Insira seu nome e sobrenome.");
+            if (string.IsNullOrWhiteSpace(username)) throw new DomainLayerException("Seu nome não pode estar vazio.");
+            if (!username.Contains(' ')) throw new DomainLayerException("Insira seu nome e sobrenome.");
         }
 
         private void ValidatePassword(string password)
         {
             if (password.Length < 8)
-                throw new Exception("A senha deve ter no minímo oito caracteres.");
+                throw new DomainLayerException("A senha deve ter no minímo oito caracteres.");
 
             // A expressão regular verifica se exitem no mínimo três carecteres numéricos
             string regularExpression = @"(\d[\w\W]|[\w\W]\d|\d){3,}";
             if (!Regex.IsMatch(password, regularExpression))
-                throw new Exception("A senha deve ter no mínimo três caracteres numéricos.");
+                throw new DomainLayerException("A senha deve ter no mínimo três caracteres numéricos.");
         }
 
         #endregion

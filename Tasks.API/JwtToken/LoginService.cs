@@ -1,4 +1,5 @@
 ﻿using System;
+using Tasks.API.ExceptionsHandler;
 using Tasks.Domain.Dto.Token;
 using Tasks.Domain.Dto.Usuario;
 using Tasks.Domain.Service;
@@ -23,11 +24,11 @@ namespace Tasks.API.JwtToken
         /// <returns>Token de acesso JWT</returns>
         public Token GenerateToken(UserCredentials credentials)
         {
-            var user = _userService.CredentialsValid(credentials);
+            var user = _userService.CredentialsValid(credentials); 
             if (user is null)
-                throw new Exception("Credenciais inválidas.");
+                throw new ApiLayerException("Credenciais inválidas.");
             if (!user.IsActiveEmail)
-                throw new Exception("Conta não está ativada, ative sua conta para fazer o login.");
+                throw new ApiLayerException("Sua conta não está ativada, ative sua conta para fazer o login.");
 
             var accessToken = _tokenService.GenerateAccessToken(
                     new TokenConfiguration()
@@ -63,9 +64,9 @@ namespace Tasks.API.JwtToken
                 return null;
 
             if (user.Refreshtoken != refreshToken)
-                throw new Exception("RefreshToken inválido.");
+                throw new ApiLayerException("Não foi possível realizar o login automático, logue-se novamente.");
             if (user.ExpirationRefreshToken < DateTime.Now)
-                throw new Exception("RefreshToken inspirado, logue-se novamente.");
+                throw new ApiLayerException("Login inspirado, logue-se novamente.");
             
             var accessToken = _tokenService.GenerateAccessToken(
                 new TokenConfiguration()
@@ -92,10 +93,8 @@ namespace Tasks.API.JwtToken
         /// <param name="userId">Id do usuário</param>
         public void RevokeToken(int? userId)
         {
-            if (userId is null)
-                throw new Exception("Token inválido.");
-
-            _userService.RevokeToken(userId.Value);
+            if (userId is not null)
+                _userService.RevokeToken(userId.Value);
         }
             
 

@@ -69,3 +69,4 @@ C:\_UserDaniel\Projetos\_Tasks\API\Tasks\Tasks.API\bin\Debug\net5.0\Tasks.Domain
 C:\_UserDaniel\Projetos\_Tasks\API\Tasks\Tasks.API\bin\Debug\net5.0\Tasks.Data.pdb
 C:\_UserDaniel\Projetos\_Tasks\API\Tasks\Tasks.API\bin\Debug\net5.0\Tasks.Domain.pdb
 C:\_UserDaniel\Projetos\_Tasks\API\Tasks\Tasks.API\obj\Debug\net5.0\Tasks.API.MvcApplicationPartsAssemblyInfo.cs
+C:\_UserDaniel\Projetos\_Tasks\API\Tasks\Tasks.API\bin\Debug\net5.0\Newtonsoft.Json.dll
