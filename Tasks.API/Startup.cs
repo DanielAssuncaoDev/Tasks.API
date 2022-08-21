@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using Tasks.API.ExceptionsHandler;
 using Tasks.API.JwtToken;
 using Tasks.Data;
 using Tasks.Domain.DependencyInjection;
@@ -82,6 +83,7 @@ namespace Tasks.API
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Tasks.API v1"));
             }
 
+            app.UseProblemDetailsExceptionHandler();
             app.UseHttpsRedirection();
 
             app.UseRouting();

@@ -4,6 +4,7 @@ using Tasks.Data.Repository.Default;
 using Tasks.Data.Model;
 using Tasks.Data.Model.Interfaces;
 using Tasks.Data.Repository.Interfaces;
+using Tasks.Data.ExceptionHandler;
 
 namespace Tasks.Data.Repository
 {
@@ -16,13 +17,13 @@ namespace Tasks.Data.Repository
         /// Altera o registro especificado pelo Id
         /// </summary>
         /// <param name="model">Modelo da entidade a ser alterado</param>
-        /// <param name="id">Id do registro a ser alterado</param>
+        /// <param name="userId">Id do registro a ser alterado</param>
         /// <returns>Entidade alterada</returns>
-        public override Tb_usuario Update(ITb_usuario model, int id)
+        public override Tb_usuario Update(ITb_usuario model, int userId)
         {
-            var user = GetById(id);
+            var user = GetById(userId);
             if (user is null)
-                throw new Exception("O usuário é inválido");
+                throw new DataLayerException($"Usuário Id:{userId} não foi encontrado.");
 
             user.Ds_usuario = model.Ds_usuario;
             user.Ds_email = model.Ds_email;
@@ -37,10 +38,10 @@ namespace Tasks.Data.Repository
         /// <summary>
         /// Valida as informações as informações de um usuário
         /// </summary>
-        /// <param name="cred">Credenciais do usuário</param>
+        /// <param name="userCredentials">Credenciais do usuário</param>
         /// <returns>Objeto do usuário</returns>
-        public Tb_usuario CredentialsValid(ITb_usuario cred) =>
-            _dataset.FirstOrDefault(x => x.Ds_email.Equals(cred.Ds_email) && x.Hx_password.Equals(cred.Hx_password));
+        public Tb_usuario CredentialsValid(ITb_usuario userCredentials) =>
+            _dataset.FirstOrDefault(x => x.Ds_email.Equals(userCredentials.Ds_email) && x.Hx_password.Equals(userCredentials.Hx_password));
 
         /// <summary>
         /// Atualiza o RefreshToken de um usuário
@@ -63,7 +64,7 @@ namespace Tasks.Data.Repository
         {
             var user = GetById(userId);
             if (user is null)
-                throw new Exception("O usuário é inválido");
+                throw new DataLayerException($"Usuário Id: {userId} não foi encontrado.");
 
             user.Dh_expiracaorefreshtoken = null;
             user.Hx_refreshtoken = null;
@@ -89,9 +90,9 @@ namespace Tasks.Data.Repository
         {
             var user = GetByEmail(email);
             if (user is null)
-                throw new Exception($"Não foi encontrado nenhum usuário com o e-mail {email}.");
+                throw new DataLayerException($"Não foi encontrado nenhum usuário com o e-mail {email}.");
             if (user.Tg_emailAtivo)
-                throw new Exception("Sua conta ja está ativa.");
+                throw new DataLayerException("Sua conta ja está ativa.");
 
             user.Cd_ativacaoEmail = key;
             _context.SaveChanges();
@@ -106,7 +107,7 @@ namespace Tasks.Data.Repository
         {
             var user = GetById(userId);
             if (user is null)
-                throw new Exception("Usuário não encontrado.");
+                throw new DataLayerException($"Usuário Id: {userId} não foi encontrado.");
 
             user.Tg_emailAtivo = true;
             user.Cd_ativacaoEmail = null;
