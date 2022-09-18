@@ -1,74 +1,74 @@
-# TasksAPI - V1
+# Projeto Tasks - V1
 
-### O intúito do projeto é facilitar a organização do usuário de uma maneira dinâmica e fácil de ser utilizada
+## O intúito do projeto é facilitar a organização do usuário de uma maneira dinâmica e fácil de ser utilizada
 <br>
 
-# Rotas de Usuário
-
+## Rotas de Usuário
+---
 
 Cadastrar-se
 ---
-### Faz o cadastro do usuário no sistema, usando o nome, sobrenome, e-mail e senha.
+#### Faz o cadastro do usuário no sistema.
 ```JSON
 {
-    "rote": "/user/Cadastrar",
+    "rote": "/user/SingUp",
     "verb": "POST",
     "requiresAuthentication": false,
     "bodyRequest": {
-        "nome": "string",
-        "sobrenome": "string",
+        "name": "string",
+        "lastName": "string",
         "email": "string",
-        "senha": "string"
+        "password": "string"
     },
     "responseJSON": {
-        "idUsuario": 0
+        "Userid": 0
     },
     "statusCodeSuccess": "201 (Created)",
     "statusCodeError": "400 (Bad Request)"
 }
 ```
 Business: 
-- O campo de email não deve se repetir
-- Quando um login é criado, ele não tem acesso as outras rotas, apenas após validar o email do usuário
-- A senha deve ser criptografada
+- O campo de email não deve se repetir no sistema;
+- Quando um login é criado, ele não tem acesso as outras rotas. Para poder ter o acesso, o usuário deve ativar sua conta utilizando as rotas "/user/SendActivationEmail" e "/user/ActivateAccount/";
+- A senha deve ser gravada no banco utilizando uma criptografia de hash.
 
 <br>
 
 Enviar E-mail de ativação
 ---
-### Após o usuário ser cadastrado, essa rota deve ser utilizada para enviar um código de ativação no e-mail do usuário.
+#### Após o usuário ser cadastrado, essa rota deve ser utilizada para enviar um código de ativação no e-mail do usuário.
 ```JSON
 {
-    "rote": "/user/EnviarEmailAtivacao",
+    "rote": "/user/SendActivationEmail",
     "verb": "PUT",
     "requiresAuthentication": false,
     "bodyRequest": {
         "email": "string",
     },
-    "responseJSON": {},
-    "statusCodeSuccess": "204 (No Content)",
+    "responseJSON": {
+        "UserId": 0
+    },
+    "statusCodeSuccess": "200 (OK)",
     "statusCodeError": "400 (Bad Request)"
 }
 ```
 Business:
-- Deve ser mandado um e-mail para usuário validar o e-mail de login, o e-mail enviado contém uma chave de ativação, que o usuário deve utilizar para ativar sua conta
+- Deve ser enviado um e-mail para usuário ativar sua conta. O e-mail enviado irá conter uma chave de ativação, que o usuário podera utilzar na rota "/user/ActivateAccount/..." para ativar sua conta.
 
 <br>
 
-Validar e-mail
+Ativar conta
 ---
-### Após criar um cadastro, o email deve ser validado. O usuário deve enviar o código de ativação que foi enviado no e-mail do prório.
+#### Após criar um cadastro, o email deve ser validado para a conta ser ativada. O usuário deve enviar o código de ativação que foi enviado no e-mail do prório nesta rota, para ativar sua conta.
 ```JSON
 {
-    "rote": "/user/ValidarEmail",
-    "verb": "PUT",
+    "rote": "/user/ActivateAccount/{UserId:int}/{key:int}",
+    "verb": "GET",
     "requiresAuthentication": false,
-    "bodyRequest": {
-        "key": 0
-    },
+    "bodyRequest": {},
     "responseJSON": {},
-    "statusCodeSuccess": "204 (No Content)",
-    "statusCodeError": "404 (Bad Request)"
+    "statusCodeSuccess": "200 (OK)",
+    "statusCodeError": "400 (Bad Request)"
 }
 ```
 
@@ -76,7 +76,8 @@ Validar e-mail
 
 Login
 ---
-### Faz a autenticação do usuário, retornando um Access Token e um Refresh Token. O Access Token deve ser utilizado para acessar outras rotas. O Refresh Token serve para conseguir um novo Access Token quando ele estiver expirado.
+#### Faz a autenticação do usuário, retornando um Access Token e um Refresh Token. 
+#### O Access Token deve ser utilizado para acessar outras rotas, quanto ao Refresh Token, deve ser utilizado para conseguir um novo Access Token quando o mesmo expirar.
 ```JSON
 {
     "rote": "/user/Login",
@@ -84,40 +85,40 @@ Login
     "requiresAuthentication": false,
     "bodyRequest": {
         "email": "string",
-        "senha": "string"
+        "password": "string"
     },
     "responseJSON": {
         "accessToken": "string",
         "refreshToken": "string",
-        "expiraEm" : "2000-01-01T10:10:10.100"
     },
-    "statusCodeSuccess": "200 (Ok)",
-    "statusCodeError": "404 (Bad Request)"
+    "statusCodeSuccess": "200 (OK)",
+    "statusCodeError": "400 (Bad Request)"
 }
 ```
 Business:
-- As credenciais devem ser válidas
+- As credenciais devem ser válidas;
+- A conta do usuário deve estar ativada.
 
 <br>
 
 Refresh Token
 ---
-### Gera um novo Access Token / Refresh Token.
+#### Gera um novo Access Token / Refresh Token.
 ```JSON
 {
-    "rote": "/user/Login",
+    "rote": "/user/RefreshToken",
     "verb": "PUT",
     "requiresAuthentication": true,
     "bodyRequest": {
-        "refreshToken": "string"
+        "refreshToken": "string",
+        "accessToken": "string"
     },
     "responseJSON": {
         "accessToken": "string",
-        "refreshToken": "string",
-        "expiraEm" : "2000-01-01T10:10:10.100"
+        "refreshToken": "string"
     },
-    "statusCodeSuccess": "200 (Ok)",
-    "statusCodeError": "404 (Bad Request)"
+    "statusCodeSuccess": "200 (OK)",
+    "statusCodeError": "400 (Bad Request)"
 }
 ```
 Business:
@@ -128,43 +129,153 @@ Business:
 
 Revoke Token
 ---
-### Limpa o Refresh Token do registro do usuário, fazendo com que o Refresh Token não possa gerar um novo Access Token.
+#### Limpa o Refresh Token do registro do usuário, fazendo com que o Refresh Token não possa gerar um novo Access Token.
 ```JSON
 {
-    "rote": "/user/Login",
+    "rote": "/user/RevokeToken",
     "verb": "PUT",
     "requiresAuthentication": true,
     "bodyRequest": {},
     "responseJSON": {},
     "statusCodeSuccess": "200 (Ok)",
-    "statusCodeError": "404 (Bad Request)"
+    "statusCodeError": "400 (Bad Request)"
 }
 ```
 Business:
-- Deve ser limpado o Refresh Token do usuário contido no Access Token
+- Deve ser limpado o Refresh Token do usuário contido no Access Token.
 
+<br>
 
-
-<br><br><br><br><br><br><br>
+## Rotas do Workspace
+---
 
 Criar Workspace
-Desc: Cria um Workspace, onde ficaram os Buckets e Tasks do usuário
+---
+#### Cria um Workspace, onde ficaram os Buckets e Tasks do usuário.
+```JSON
+{
+    "rote": "/Workspace",
+    "verb": "POST",
+    "requiresAuthentication": true,
+    "bodyRequest": {
+        "workspace": "string",
+        "ownerId": 0
+    },
+    "responseJSON": {},
+    "statusCodeSuccess": "200 (Ok)",
+    "statusCodeError": "400 (Bad Request)"
+}
+```
 Business: 
-Quando é criado um Workspace, deve ser criado também uma equipe relacionada a mesma, inicialmente incluindo apenas o owner 
-Caso o Workspace esteja como privado, apenas os integrantes da equipe vinculada ao Workspace, podem acessar ela.
-Listar Workspace
-Desc: Lista os Workspaces que o usuário participa
+- Quando é criado um Workspace, deve ser adicionado o criador do Workspace como integrante do mesmo;
+- Apenas os integrantes do Workspace podem ter acesso a ele.
+
+<br>
+
+Listar Workspaces do usuário
+---
+#### Lista os Workspaces que o usuário participa.
+```JSON
+{
+    "rote": "/Workspace",
+    "verb": "GET",
+    "requiresAuthentication": true,
+    "bodyRequest": {},
+    "queryParams": {
+        "showInactive": false,
+        "page": 0,
+        "limit": 0
+    },
+    "responseJSON": {
+        "collection": [
+            {
+                "id": 0,
+                "workspace": "string",
+                "inactive": false
+            }
+        ],
+        "total": 0
+    },
+    "statusCodeSuccess": "200 (Ok)",
+    "statusCodeError": "400 (Bad Request)"
+}
+```
 Business: 
-Os Workspaces só podem ser mostrados para o usuário que é integrante do mesmo
+- Os Workspaces só podem ser mostrados para os integrantes do mesmo.
+
+<br>
+
+Buscar Workspace
+---
+#### Busca o Worspace selecionado pelo usuário.
+```JSON
+{
+    "rote": "/Workspace/{idWorkspace:int}",
+    "verb": "GET",
+    "requiresAuthentication": true,
+    "bodyRequest": {},
+    "responseJSON": {
+        "workspace": "string",
+        "bucket": [
+            {
+                "id": 0,
+                "bucket": "string",
+                "position": 0,
+                "inactive": false
+            }
+        ]
+    },
+    "statusCodeSuccess": "200 (Ok)",
+    "statusCodeError": "404 (Not Found)"
+}
+```
+Business:
+- Apenas os integrantes do workspace podem consulta-lo
+
+<br>
+
 Alterar Workspace
-Desc: Altera os valores do Workspace especificado
+---
+#### Altera os valores do Workspace especificado.
+```JSON
+{
+    "rote": "/Workspace/{idWorkspace:int}",
+    "verb": "PUT",
+    "requiresAuthentication": true,
+    "bodyRequest": {
+        "workspace": "string"
+    },
+    "responseJSON": {},
+    "statusCodeSuccess": "200 (Ok)",
+    "statusCodeError": "400 (Bad Request)"
+}
+```
 Business: 
-Apenas os integrantes do Workspace podem alterar ele
+- Apenas os integrantes do Workspace podem altera-lo.
+
+<br>
+
 Ativar/Inativar Workspace
-Desc: Ativa ou inativa o Workspace dependendo da atual situação do mesmo
+---
+#### Ativa ou inativa o Workspace dependendo da atual situação do mesmo.
+```JSON
+{
+    "rote": "/Workspace/{idWorkspace:int}/ExclusaoLogica",
+    "verb": "PUT",
+    "requiresAuthentication": true,
+    "bodyRequest": {},
+    "responseJSON": {
+        "inactive": false
+    },
+    "statusCodeSuccess": "200 (Ok)",
+    "statusCodeError": "400 (Bad Request)"
+}
+```
 Business: 
-Quando um Workspace for inativado, deve inativar também todos os Buckets e Taks referente a ele
-Quando um Workspace for ativado, deve ativar também todos os Buckets e Tasks que foram inativados, porém apenas os que foram inativados pela inativação do Workspace
+- Quando um Workspace for inativado, deve inativar também todos os Buckets e Tasks referente a ele;
+- Quando um Workspace for ativado, deve ativar também todos os Buckets e Tasks que foram inativados, porém apenas os que foram inativados pela inativação do Workspace.
+
+
 Adicionar membro a equipe
 Desc: Manda um e-mail para um usuário para que ele entre na equipe
 Business: 
@@ -291,13 +402,3 @@ Alterar estado do Item
 Desc: Conclui ou reseta o status do Item
  Business: 
 Apenas os membros do Workspace podem adicionar um item ao Checklist
-
-
-
-
-
-
-Adicionais
-Fazer o sistema calcular ordem de prioridade
-
-
